@@ -1,0 +1,124 @@
+package entity;
+
+import java.util.Date;
+
+/**
+ * 用户实体类
+ */
+public class PersonInfo {
+
+    //ID
+    private Integer userId;
+    //名字
+    private String nickname;
+    //头像
+    private String profileImg;
+    //邮箱
+    private String email;
+    //性别
+    private String gender;
+    //1.店家 2.顾客 3.超级管理员
+    private Integer userType;
+    //创建时间
+    private Date createTime;
+    //上次更新时间，。
+    private Date lastEditTime;
+    //帮助次数
+    private Integer helpTimes;
+    public PersonInfo(){
+
+    }
+    public PersonInfo(Integer userId,String nickname, String profileImg, String email, String gender, Date lastEditTime, Integer helpTimes) {
+        this.userId = userId;
+        this.nickname = nickname;
+        this.profileImg = profileImg;
+        this.email = email;
+        this.gender = gender;
+        this.lastEditTime = lastEditTime;
+        this.helpTimes = helpTimes;
+    }
+
+    public PersonInfo(Integer userId, String nickName, String profileImg, String email, String gender, Integer userType, Date createTime, Date lastEditTime, Integer helpTimes) {
+        this.userId = userId;
+        this.nickname = nickName;
+        this.profileImg = profileImg;
+        this.email = email;
+        this.gender = gender;
+        this.userType = userType;
+        this.createTime = createTime;
+        this.lastEditTime = lastEditTime;
+        this.helpTimes = helpTimes;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getName() {
+        return nickname;
+    }
+
+    public void setName(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getProfileImg() {
+        return profileImg;
+    }
+
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getLastEditTime() {
+        return lastEditTime;
+    }
+
+    public void setLastEditTime(Date lastEditTime) {
+        this.lastEditTime = lastEditTime;
+    }
+
+    public Integer getHelpTimes() {
+        return helpTimes;
+    }
+
+    public void setHelpTimes(Integer helpTimes) {
+        this.helpTimes = helpTimes;
+    }
+}

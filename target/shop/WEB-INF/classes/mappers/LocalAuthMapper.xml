@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--本地账户表数据库操作-->
+<mapper namespace="dao.LocalAuthDao">
+
+    <resultMap id="localAuthResultMap" type="entity.LocalAuth">
+        <id column="local_auth_id" property="localauthId" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="create_time" property="createTime" />
+        <result column="last_edit_time" property="lastEditTime" />
+        <association property="personInfo" column="user_id"
+                     javaType="entity.PersonInfo">
+            <id column="user_id" property="userId" />
+            <result column="nick_name" property="nickname" />
+            <result column="profile_img" property="profileImg" />
+            <result column="gender" property="gender" />
+            <result column="email" property="email" />
+            <result column="user_type" property="userType" />
+            <result column="create_time" property="createTime" />
+            <result column="last_edit_time" property="lastEditTime" />
+            <result column="help_times" property="helpTimes" />
+        </association>
+    </resultMap>
+    <!--通过账户信息进行查询-->
+    <select id="queryLocalByUserNameAndPwd" resultMap="localAuthResultMap" parameterType="String">
+        SELECT
+		l.local_auth_id,l.username,l.password,l.create_time,l.last_edit_time,
+		p.user_id,p.nick_name,p.gender,p.email,p.profile_img,p.user_type,p.create_time,
+		p.last_edit_time,p.help_times
+		FROM
+		lf_local_auth l
+		LEFT JOIN
+		lf_person_info p ON
+		l.user_id = p.user_id
+		WHERE
+		l.username = #{username}
+		AND
+		l.password = #{password}
+    </select>
+
+    <!--通过用户ID进行查询-->
+    <select id="queryLocalByUserId" resultMap="localAuthResultMap" parameterType="Long">
+     SELECT
+		l.local_auth_id,l.username,l.password,l.create_time,l.last_edit_time,
+		p.user_id,p.nick_name,p.gender,p.email,p.profile_img,p.user_type,
+		p.create_time,p.last_edit_time,p.help_times
+		FROM
+		lf_local_auth l
+		LEFT JOIN
+		lf_person_info p
+		ON l.user_id = p.user_id
+		WHERE
+		l.user_id = #{userId}
+    </select>
+
+    <!--通过用户名进行查询-->
+    <select id="queryLocalByUserName" resultMap="localAuthResultMap" parameterType="java.lang.String">
+     SELECT
+		l.local_auth_id,l.username,l.password,l.create_time,l.last_edit_time,
+		p.user_id,p.nick_name,p.gender,p.email,p.profile_img,p.user_type,
+		p.create_time,p.last_edit_time,p.help_times
+		FROM
+		lf_local_auth l
+		LEFT JOIN
+		lf_person_info p
+		ON l.user_id = p.user_id
+		WHERE
+		l.username = #{username}
+    </select>
+    <!--插入操作-->
+    <insert id="insertLocalAuth" parameterType="entity.LocalAuth"
+            useGeneratedKeys="true" keyProperty="localAuthId" keyColumn="local_auth_id">
+        insert into
+        lf_local_auth(username,password,user_id,create_time,last_edit_time)
+        values
+        (#{username},#{password},#{userId},#{createTime},#{lastEditTime})
+    </insert>
+
+
+    <!--更新操作，需要判断新密码不能为空，且上次修改时间也不-->
+    <update id="updatePassword">
+        update lf_local_auth
+        <set>
+            <if test="newPassword != null">password=#{newPassword},</if>
+            <if test="lastEditTime != null">last_edit_time=#{lastEditTime}</if>
+        </set>
+        where
+        username=#{username}
+        AND
+        password=#{password}
+    </update>
+</mapper>
