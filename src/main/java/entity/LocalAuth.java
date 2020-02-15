@@ -6,7 +6,7 @@ import java.util.Date;
  * 本地账号表
  *
  * @author Jacky
- *
+ * 实体层 数据库在项目中的类
  */
 public class LocalAuth {
 

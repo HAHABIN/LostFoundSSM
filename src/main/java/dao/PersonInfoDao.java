@@ -3,7 +3,8 @@ package dao;
 import entity.PersonInfo;
 
 /**
- * 用户接口类 持久层
+ * 用户信息管理接口类
+ * 持久层
  */
 public interface PersonInfoDao extends BaseDao<PersonInfo> {
 

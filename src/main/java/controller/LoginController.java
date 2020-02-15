@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ *用户登录管理控制层
+ */
 @Controller
 @RequestMapping("/loadadmin")
 public class LoginController {

@@ -1,6 +1,7 @@
 package utils;
 
 import java.security.MessageDigest;
+import java.util.Scanner;
 
 /**
  * MD5加密
@@ -47,5 +48,7 @@ public class MD5 {
 
 	public static void main(String[] args) {
 		System.out.println(MD5.getMd5("123456"));
+		Scanner input = new Scanner(System.in);
+		System.out.println(input.hasNext());
 	}
 }

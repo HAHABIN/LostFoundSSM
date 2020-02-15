@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import service.LocalAuthService;
 
 import java.util.Date;
-
+/**
+ *用户登录管理业务层接口实现类
+ */
 @Service
 public class LocalAuthServiceImpl implements LocalAuthService {
 

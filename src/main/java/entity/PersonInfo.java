@@ -3,7 +3,8 @@ package entity;
 import java.util.Date;
 
 /**
- * 用户实体类
+ * 用户信息实体类
+ * 实体层 数据库在项目中的类
  */
 public class PersonInfo {
 

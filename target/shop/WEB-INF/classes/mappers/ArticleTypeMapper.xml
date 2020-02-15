@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--城市表数据库操作-->
+<mapper namespace="dao.ArticleTypeDao">
+    <resultMap id="ArticleTypeResultMap" type="entity.ArticleType">
+        <id column="type_id" property="typeId" />
+        <result column="type_name" property="typeName" />
+        <result column="priority" property="priority" />
+        <result column="create_time" property="createTime" />
+        <result column="last_edit_time" property="lastEditTime" />
+    </resultMap>
+    <!-- 查询所有类型-->
+    <select id="query" resultMap="ArticleTypeResultMap">
+        SELECT * FROM lf_article_type
+    </select>
+    <!-- 新增物品类型
+        主键自动增长              useGeneratedKeys="true"
+        对应的主键的对象           keyProperty=””
+        对应表对象                keyColumn
+        -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="type_id" keyColumn="type_id">
+        insert into
+        lf_article_type(type_name,priority,create_time)
+        values
+        (#{typeName},#{priority},#{createTime})
+    </insert>
+
+    <!-- 条件查询类型   -->
+    <select id="queryArticleType" resultMap="ArticleTypeResultMap">
+        SELECT * FROM lf_article_type
+        <where>
+            <if test="typeId!=-1">
+                and type_id = #{typeId}
+            </if>
+            <if test="typeName!=null">
+                and type_name = #{typeName}
+            </if>
+            <if test="priority!=-1">
+                and priority = #{priority}
+            </if>
+        </where>
+    </select>
+</mapper>

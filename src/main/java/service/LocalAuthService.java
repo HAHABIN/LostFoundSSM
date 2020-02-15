@@ -4,7 +4,9 @@ import entity.LocalAuth;
 import entity.PersonInfo;
 
 import java.util.Date;
-
+/**
+ * 用户登录管理业务层接口
+ */
 public interface LocalAuthService {
     /**
      * 通过帐号和密码获取平台帐号信息

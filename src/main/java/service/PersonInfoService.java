@@ -5,6 +5,7 @@ import entity.PersonInfo;
 /**
  * @author HABIN
  * @date 2020/2/7 14:11
+ * 用户信息管理业务层接口
  */
 public interface PersonInfoService {
 
