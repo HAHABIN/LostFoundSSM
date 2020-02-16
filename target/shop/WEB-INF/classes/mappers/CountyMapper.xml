@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--城市表数据库操作-->
+<mapper namespace="dao.CountyDao">
+
+    <resultMap id="CountyResultMap" type="entity.County">
+        <id column="id" property="id" />
+        <result column="pid" property="cityId" />
+        <result column="city_name" property="countyName" />
+        <result column="type" property="type" />
+    </resultMap>
+
+    <select id="query" resultMap="CountyResultMap">
+        SELECT * FROM lf_city
+    </select>
+    <select id="queryCounty" resultMap="CountyResultMap">
+        SELECT * FROM lf_city
+              WHERE pid = #{cityId}
+    </select>
+</mapper>

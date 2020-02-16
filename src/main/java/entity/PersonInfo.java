@@ -1,12 +1,13 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 用户信息实体类
  * 实体层 数据库在项目中的类
  */
-public class PersonInfo {
+public class PersonInfo implements Serializable {
 
     //ID
     private Integer userId;

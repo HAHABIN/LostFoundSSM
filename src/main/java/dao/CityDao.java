@@ -1,6 +1,7 @@
 package dao;
 
 import entity.City;
+import entity.Province;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,13 +22,10 @@ public interface CityDao extends BaseDao<City> {
     List<City> query();
 
     /**
-     * 查询省级数据
-     * @param id 城市编号
-     * @param pid 城市上级编号
-     * @param type 城市级别
+     * 查询城市数据
+     * @param provinceId 城市上级编号
      */
-    List<City> queryCity(@Param("id") int id,
-                         @Param("pid") int pid,
-                         @Param("cityName") String cityName,
-                         @Param("type") int type);
+    List<City> queryCity(@Param("provinceId") int provinceId);
+
+
 }

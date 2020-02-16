@@ -5,6 +5,7 @@ import entity.City;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.ArticleTypeService;
 import service.CityService;
@@ -29,7 +30,7 @@ public class ArticleTypeController {
     @Autowired
     private ArticleTypeService articleType;
 
-    @RequestMapping(value = "/queryAll")
+    @RequestMapping(value = "/queryAll", method = RequestMethod.POST)
     @ResponseBody
     private Map<String,Object> queryAll(HttpServletRequest request){
         Map<String,Object> modelMap = new HashMap<>();
@@ -51,7 +52,7 @@ public class ArticleTypeController {
 
 
 
-    @RequestMapping(value = "/queryType" )
+    @RequestMapping(value = "/queryType" , method = RequestMethod.POST)
     @ResponseBody
     private Map<String,Object> queryType(HttpServletRequest request){
         Map<String,Object> modelMap = new HashMap<>();

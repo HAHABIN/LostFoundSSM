@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Date;
  * 物品类型实体类
  * 实体层 数据库在项目中的类
  */
-public class ArticleType {
+public class ArticleType implements Serializable {
 
     //物品类型id
     private Integer typeId;

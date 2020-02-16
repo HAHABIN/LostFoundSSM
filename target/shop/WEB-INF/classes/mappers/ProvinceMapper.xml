@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--城市表数据库操作-->
+<mapper namespace="dao.ProviceDao">
+
+    <resultMap id="ProvinceResultMap" type="entity.Province">
+        <id column="id" property="provinceId" />
+        <result column="pid" property="pid" />
+        <result column="city_name" property="provinceName" />
+        <result column="type" property="type" />
+        <collection column="id" property="cityList"
+        select="dao.CityDao.queryCity">
+
+        </collection>
+    </resultMap>
+    <select id="query" resultMap="ProvinceResultMap">
+        SELECT * FROM lf_city
+    </select>
+    <select id="queryProvince" resultMap="ProvinceResultMap">
+        SELECT * FROM lf_city
+        <where>
+            <if test="id!=-1">
+                and id = #{id}
+            </if>
+            <if test="pid!=-1">
+                and pid = #{pid}
+            </if>
+            <if test="cityName!=null">
+                and city_name = #{cityName}
+            </if>
+            <if test="type!=-1">
+                and type = #{type}
+            </if>
+        </where>
+    </select>
+</mapper>

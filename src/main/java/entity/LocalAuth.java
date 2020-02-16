@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Date;
  * @author Jacky
  * 实体层 数据库在项目中的类
  */
-public class LocalAuth {
+public class LocalAuth implements Serializable {
 
     // ID
     private Integer localauthId;

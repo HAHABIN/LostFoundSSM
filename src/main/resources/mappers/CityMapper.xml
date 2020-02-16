@@ -6,29 +6,21 @@
 <mapper namespace="dao.CityDao">
 
     <resultMap id="CityResultMap" type="entity.City">
-        <id column="id" property="id" />
-        <result column="pid" property="pid" />
+        <id column="id" property="cityId" />
+        <result column="pid" property="provinceId" />
         <result column="city_name" property="cityName" />
         <result column="type" property="type" />
+    <!-- 三级联动查询-->
+        <collection column="id" property="countyList"
+                    select="dao.CountyDao.queryCounty">
+
+        </collection>
     </resultMap>
     <select id="query" resultMap="CityResultMap">
         SELECT * FROM lf_city
     </select>
     <select id="queryCity" resultMap="CityResultMap">
         SELECT * FROM lf_city
-        <where>
-            <if test="id!=-1">
-                and id = #{id}
-            </if>
-            <if test="pid!=-1">
-                and pid = #{pid}
-            </if>
-            <if test="cityName!=null">
-                and city_name = #{cityName}
-            </if>
-            <if test="type!=-1">
-                and type = #{type}
-            </if>
-        </where>
+        WHERE pid = #{provinceId}
     </select>
 </mapper>

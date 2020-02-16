@@ -17,6 +17,7 @@ import java.util.Map;
 /**
  * @author HABIN
  * @date 2020/2/11 10:49
+ * 上传图片保存服务器
  */
 @Controller
 @RequestMapping("/saveToImgByStr")

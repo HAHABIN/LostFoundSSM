@@ -1,6 +1,7 @@
 package dao;
 
 import entity.City;
+import entity.Province;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -16,14 +17,14 @@ import java.util.List;
 public class CityTest extends BaseTest {
 
     @Autowired
-    private CityDao cityDao;
+    private ProviceDao proviceDao;
 
     @Test
     public void queryTest(){
-        List<City> cityList = cityDao.query();
-        for (City city:cityList){
-            System.out.println(city.toString());
-        }
+//        List<City> cityList = cityDao.query();
+//        for (City city:cityList){
+//            System.out.println(city.toString());
+//        }
     }
 
     @Test
@@ -32,8 +33,8 @@ public class CityTest extends BaseTest {
         int pid = 3;
         String cityName = null;
         int type = 0;
-        List<City> cityList = cityDao.queryCity(id,pid,cityName,type);
-        for (City city:cityList){
+        List<Province> cityList = proviceDao.queryProvince(-1,-1,null,1);
+        for (Province city:cityList){
             System.out.println(city.toString());
         }
     }
