@@ -16,7 +16,6 @@ public interface ArticleInfoDao extends BaseDao<ArticleInfo> {
      * @param  typeId 物品类型id
      * @param  addressContent 找寻地址
      * @param  status 发布类型
-     * @param  imgStr 照片地址
      * @param  recordStatus 发布状态
      *
      * */

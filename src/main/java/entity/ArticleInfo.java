@@ -13,8 +13,6 @@ public class ArticleInfo {
     private int id;
     //物品类型
     private int typeId;
-    //物品名称
-    private String name;
     //发布者id
     private int userId;
     //拾物时间或者丢失时间
@@ -23,6 +21,8 @@ public class ArticleInfo {
     private String addressContent;
     //物品描述
     private String description;
+    //联系电话
+    private int phone;
     //物品属性 1为失物 2为拾物a
     private int status;
     //物品照片
@@ -52,14 +52,6 @@ public class ArticleInfo {
 
     public void setTypeId(int typeId) {
         this.typeId = typeId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getUserId() {
@@ -92,6 +84,14 @@ public class ArticleInfo {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
     }
 
     public int getStatus() {
@@ -155,11 +155,11 @@ public class ArticleInfo {
         return "ArticleInfo{" +
                 "id=" + id +
                 ", typeId=" + typeId +
-                ", name='" + name + '\'' +
                 ", userId=" + userId +
                 ", findTime=" + findTime +
                 ", addressContent='" + addressContent + '\'' +
                 ", description='" + description + '\'' +
+                ", phone=" + phone +
                 ", status=" + status +
                 ", imgStr='" + imgStr + '\'' +
                 ", recordStatus=" + recordStatus +

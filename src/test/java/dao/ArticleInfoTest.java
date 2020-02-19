@@ -26,29 +26,29 @@ public class ArticleInfoTest extends BaseTest {
     public void insert() {
 //        Date date = StringUtils.strTodate(1582123397000);
 //        System.out.println(date);
-//        int id = (int) ((Math.random() * 9 + 1) * 10000000);
-//        int userId = 6111956;
-//        int typeId = 2;
-//        String name = "商品标题5";
-//        Date findTime = new Date();
-//        String address_content = "广东省汕头市潮南区ddd";
-//        String description = "物品详细3";
-//        int status = 2;
-//        int recstatus = 2;
-//        Date createTime = new Date();
-//        ArticleInfo articleInfo = new ArticleInfo();
-//        articleInfo.setId(id);
-//        articleInfo.setUserId(userId);
-//        articleInfo.setTypeId(typeId);
-//        articleInfo.setFindTime(findTime);
-//        articleInfo.setAddressContent(address_content);
-//        articleInfo.setName(name);
-//        articleInfo.setDescription(description);
-//        articleInfo.setStatus(status);
-//        articleInfo.setRecordStatus(recstatus);
-//        articleInfo.setCreateTime(createTime);
-//        int insert = articleInfoDao.insert(articleInfo);
-//        assertEquals(1, insert);
+        int id = (int) ((Math.random() * 9 + 1) * 10000000);
+        int userId = 6111956;
+        int typeId = 2;
+        int phone = 1553010155;
+        Date findTime = new Date();
+        String address_content = "广东省汕头市潮南区ddd";
+        String description = "物品详细3";
+        int status = 2;
+        int recstatus = 2;
+        Date createTime = new Date();
+        ArticleInfo articleInfo = new ArticleInfo();
+        articleInfo.setId(id);
+        articleInfo.setUserId(userId);
+        articleInfo.setTypeId(typeId);
+        articleInfo.setFindTime(findTime);
+        articleInfo.setAddressContent(address_content);
+        articleInfo.setPhone(phone);
+        articleInfo.setDescription(description);
+        articleInfo.setStatus(status);
+        articleInfo.setRecordStatus(recstatus);
+        articleInfo.setCreateTime(createTime);
+        int insert = articleInfoDao.insert(articleInfo);
+        assertEquals(1, insert);
 
     }
     @Test

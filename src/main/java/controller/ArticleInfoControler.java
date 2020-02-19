@@ -39,7 +39,7 @@ public class ArticleInfoControler {
         int id = (int) ((Math.random() * 9 + 1) * 10000000);
         int userId = HttpServletRequestUtil.getInt(request, "userId");
         int typeId = HttpServletRequestUtil.getInt(request, "typeId");
-        String name = HttpServletRequestUtil.getString(request, "name");
+        int phone = HttpServletRequestUtil.getInt(request, "phone");
         long findTimeStr = HttpServletRequestUtil.getLong(request, "findTime");
         String addressContent = HttpServletRequestUtil.getString(request, "addressContent");
         ;
@@ -54,7 +54,7 @@ public class ArticleInfoControler {
         articleInfo.setTypeId(typeId);
         articleInfo.setFindTime(new Date(findTimeStr));
         articleInfo.setAddressContent(addressContent);
-        articleInfo.setName(name);
+        articleInfo.setPhone(phone);
         articleInfo.setDescription(description);
         articleInfo.setStatus(status);
         articleInfo.setRecordStatus(recordStatus);
