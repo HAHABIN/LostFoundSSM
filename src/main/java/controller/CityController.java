@@ -73,12 +73,12 @@ public class CityController {
                 modelMap.put("message", "获取省市级列表信息成功");
                 modelMap.put("code", 1);
                 modelMap.put("data", cityList);
-                modelMap.put("timestamp", new Date());
+                modelMap.put("timestamp", new Date().getTime());
             } else {
                 modelMap.put("success", false);
                 modelMap.put("message", "获取省市级列表信息失败");
                 modelMap.put("code", 2);
-                modelMap.put("timestamp", new Date());
+                modelMap.put("timestamp", new Date().getTime());
             }
 
         return modelMap;

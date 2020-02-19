@@ -10,7 +10,7 @@
         <result column="pid" property="provinceId" />
         <result column="city_name" property="cityName" />
         <result column="type" property="type" />
-
+    <!-- 三级联动查询-->
         <collection column="id" property="countyList"
                     select="dao.CountyDao.queryCounty">
 

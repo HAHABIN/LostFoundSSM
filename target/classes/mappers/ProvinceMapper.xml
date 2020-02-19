@@ -6,12 +6,13 @@
 <mapper namespace="dao.ProviceDao">
 
     <resultMap id="ProvinceResultMap" type="entity.Province">
-        <id column="id" property="provinceId" />
-        <result column="pid" property="pid" />
-        <result column="city_name" property="provinceName" />
-        <result column="type" property="type" />
+        <id column="id" property="provinceId"/>
+        <result column="pid" property="pid"/>
+        <result column="city_name" property="provinceName"/>
+        <result column="type" property="type"/>
+        <!-- 二级级联动查询 此处id为上面的id-->
         <collection column="id" property="cityList"
-        select="dao.CityDao.queryCity">
+                    select="dao.CityDao.queryCity">
 
         </collection>
     </resultMap>
