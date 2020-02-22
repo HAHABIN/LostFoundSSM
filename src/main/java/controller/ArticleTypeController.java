@@ -39,7 +39,7 @@ public class ArticleTypeController {
             modelMap.put("success", true);
             modelMap.put("message", "获取城市信息成功");
             modelMap.put("code", 1);
-            modelMap.put("data",articleTypeList);
+            modelMap.put("result",articleTypeList);
             modelMap.put("timestamp",new Date());
         } else {
             modelMap.put("success", false);
@@ -66,7 +66,7 @@ public class ArticleTypeController {
 //            modelMap.put("success", true);
 //            modelMap.put("message", "获取物品类型信息成功");
 //            modelMap.put("code", 1);
-            modelMap.put("data",articleTypeList);
+            modelMap.put("result",articleTypeList);
 //            modelMap.put("timestamp",new Date());
         } else {
             modelMap.put("success", false);

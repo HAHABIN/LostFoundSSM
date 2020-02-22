@@ -11,6 +11,13 @@ public class HttpServletRequestUtil {
 		}
 	}
 
+	public static int getBigInt(HttpServletRequest request, String key) {
+		try {
+			return Integer.decode(request.getParameter(key));
+		} catch (Exception e) {
+			return -1;
+		}
+	}
 	public static long getLong(HttpServletRequest request, String key) {
 		try {
 			return Long.valueOf(request.getParameter(key));

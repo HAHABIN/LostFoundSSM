@@ -25,7 +25,9 @@ public interface ArticleInfoService {
                                        @Param("addressContent") String addressContent,
                                        @Param("description")String description,
                                        @Param("status") int status,
-                                       @Param("recordStatus")int recordStatus);
+                                       @Param("recordStatus")int recordStatus,
+                                       @Param("start") int start,
+                                       @Param("pageSize") int pageSize);
     /**
      * 添加发布物品
      *

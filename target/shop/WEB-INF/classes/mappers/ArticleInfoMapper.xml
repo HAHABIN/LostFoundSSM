@@ -44,6 +44,8 @@
                 and description LIKE  "%"#{description}"%"
             </if>
         </where>
+        ORDER BY create_time DESC
+        LIMIT #{start} ,#{pageSize}
     </select>
 
     <insert id="insert" parameterType="entity.ArticleInfo">

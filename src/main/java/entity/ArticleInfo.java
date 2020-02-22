@@ -22,7 +22,7 @@ public class ArticleInfo {
     //物品描述
     private String description;
     //联系电话
-    private int phone;
+    private String phone;
     //物品属性 1为失物 2为拾物a
     private int status;
     //物品照片
@@ -70,6 +70,14 @@ public class ArticleInfo {
         this.findTime = findTime;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getAddressContent() {
         return addressContent;
     }
@@ -86,13 +94,6 @@ public class ArticleInfo {
         this.description = description;
     }
 
-    public int getPhone() {
-        return phone;
-    }
-
-    public void setPhone(int phone) {
-        this.phone = phone;
-    }
 
     public int getStatus() {
         return status;

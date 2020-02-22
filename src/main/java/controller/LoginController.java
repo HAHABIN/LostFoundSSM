@@ -51,7 +51,7 @@ public class LoginController {
                     modelMap.put("success", true);
                     modelMap.put("message", "登录成功");
                     modelMap.put("code", 1);
-                    modelMap.put("data", localAuth.getPersonInfo());
+                    modelMap.put("result", localAuth.getPersonInfo());
                     modelMap.put("timestamp",new Date());
 //					// 登录成功则设置上session信息
 //					request.getSession().setAttribute("user", localAuth.getPersonInfo());
@@ -110,7 +110,7 @@ public class LoginController {
                 modelMap.put("success", true);
                 modelMap.put("message", "注册成功");
                 modelMap.put("code", 1);
-                modelMap.put("data", personInfo);
+                modelMap.put("result", personInfo);
                 modelMap.put("timestamp",new Date());
             } else {
                 modelMap.put("success", false);

@@ -92,7 +92,7 @@ public class UpdatePhoto {
                 modelMap.put("success", true);
                 modelMap.put("message", "上传成功");
                 modelMap.put("code", 1);
-                modelMap.put("data",lastpath);
+                modelMap.put("result",lastpath);
                 modelMap.put("timestamp",new Date());
             } catch (Exception e) {
                 e.printStackTrace();

@@ -2,6 +2,7 @@ package service.impl;
 
 import dao.ArticleInfoDao;
 import entity.ArticleInfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.ArticleInfoService;
@@ -20,8 +21,11 @@ public class ArticleInfoServiceImpl implements ArticleInfoService {
     private ArticleInfoDao articleInfoDao;
 
     @Override
-    public List<ArticleInfo> queryArticleInfo(int id,int userId, int typeId, String addressContent, String description, int status, int recordStatus) {
-        return articleInfoDao.queryArticleInfo(id,userId,typeId,addressContent,description,status,recordStatus);
+    public List<ArticleInfo> queryArticleInfo(int id,int userId, int typeId,
+                                              String addressContent, String description,
+                                              int status, int recordStatus,
+                                              int start, int pageSize) {
+        return articleInfoDao.queryArticleInfo(id,userId,typeId,addressContent,description,status,recordStatus,start,pageSize);
     }
 
 

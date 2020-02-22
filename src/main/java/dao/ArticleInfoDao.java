@@ -17,6 +17,8 @@ public interface ArticleInfoDao extends BaseDao<ArticleInfo> {
      * @param  addressContent 找寻地址
      * @param  status 发布类型
      * @param  recordStatus 发布状态
+     * @param  pageNo 第几页
+     * @param  pageSize 每页最多行
      *
      * */
     List<ArticleInfo> queryArticleInfo(@Param("id")int id,
@@ -25,7 +27,9 @@ public interface ArticleInfoDao extends BaseDao<ArticleInfo> {
                                        @Param("addressContent") String addressContent,
                                        @Param("description")String description,
                                        @Param("status") int status,
-                                       @Param("recordStatus")int recordStatus);
+                                       @Param("recordStatus")int recordStatus,
+                                       @Param("start") int start,
+                                       @Param("pageSize") int pageSize);
     /**
      * 添加发布物品
      *

@@ -39,12 +39,11 @@ public class ArticleInfoControler {
         int id = (int) ((Math.random() * 9 + 1) * 10000000);
         int userId = HttpServletRequestUtil.getInt(request, "userId");
         int typeId = HttpServletRequestUtil.getInt(request, "typeId");
-        int phone = HttpServletRequestUtil.getInt(request, "phone");
+        String phone = HttpServletRequestUtil.getString(request, "phone");
         long findTimeStr = HttpServletRequestUtil.getLong(request, "findTime");
+        String imgStr = HttpServletRequestUtil.getString(request, "imgStr");
         String addressContent = HttpServletRequestUtil.getString(request, "addressContent");
-        ;
         String description = HttpServletRequestUtil.getString(request, "description");
-        ;
         int status = HttpServletRequestUtil.getInt(request, "status");
         int recordStatus = HttpServletRequestUtil.getInt(request, "recordStatus");
         /*设置发布物品信息*/
@@ -54,6 +53,7 @@ public class ArticleInfoControler {
         articleInfo.setTypeId(typeId);
         articleInfo.setFindTime(new Date(findTimeStr));
         articleInfo.setAddressContent(addressContent);
+        articleInfo.setImgStr(imgStr);
         articleInfo.setPhone(phone);
         articleInfo.setDescription(description);
         articleInfo.setStatus(status);
@@ -84,22 +84,31 @@ public class ArticleInfoControler {
         int id = HttpServletRequestUtil.getInt(request, "id");
         int userId = HttpServletRequestUtil.getInt(request, "userId");
         int typeId = HttpServletRequestUtil.getInt(request, "typeId");
-        String addressContent = HttpServletRequestUtil.getString(request, "addressContent");;
-        String description = HttpServletRequestUtil.getString(request, "description");;
+        String addressContent = HttpServletRequestUtil.getString(request, "addressContent");
+        String description = HttpServletRequestUtil.getString(request, "description");
         int status = HttpServletRequestUtil.getInt(request, "status");
         int recordStatus = HttpServletRequestUtil.getInt(request, "recordStatus");
-
+        int pageNo = HttpServletRequestUtil.getInt(request, "pageNo");
+        int pageSize = HttpServletRequestUtil.getInt(request, "pageSize");
+        //分页  最少两行
+        if (pageSize <=2 || pageSize > 20) pageSize = 10;
+        if (pageNo <= 0) {
+            pageNo = 0;
+        } else {
+            pageNo--;
+        }
+        int start = pageNo * pageSize;
         List<ArticleInfo> articleInfoList = articleInfoService.queryArticleInfo(id, userId, typeId, addressContent
-                , description, status, recordStatus);
-        if (articleInfoList!=null&&!articleInfoList.isEmpty()){
+                , description, status, recordStatus, start, pageSize);
+        if (articleInfoList != null && !articleInfoList.isEmpty()) {
             modelMap.put("success", true);
-            modelMap.put("message", "新增物品信息成功");
+            modelMap.put("message", "查询物品信息成功");
             modelMap.put("code", 1);
-            modelMap.put("data",articleInfoList);
+            modelMap.put("result", articleInfoList);
             modelMap.put("timestamp", new Date().getTime());
         } else {
             modelMap.put("success", false);
-            modelMap.put("message", "新增物品信息失败");
+            modelMap.put("message", "查询物品信息失败");
             modelMap.put("code", 2);
             modelMap.put("timestamp", new Date().getTime());
         }

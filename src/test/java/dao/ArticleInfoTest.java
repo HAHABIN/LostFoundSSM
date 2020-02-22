@@ -29,7 +29,7 @@ public class ArticleInfoTest extends BaseTest {
         int id = (int) ((Math.random() * 9 + 1) * 10000000);
         int userId = 6111956;
         int typeId = 2;
-        int phone = 1553010155;
+        String phone = "1553010155";
         Date findTime = new Date();
         String address_content = "广东省汕头市潮南区ddd";
         String description = "物品详细3";
@@ -53,14 +53,16 @@ public class ArticleInfoTest extends BaseTest {
     }
     @Test
     public void query() {
-        List<ArticleInfo> artList = articleInfoDao.queryArticleInfo(-1, -1, -1, "福",null, 1, 1);
-        if (!artList.isEmpty() && artList != null){
-            for (ArticleInfo articleInfo : artList) {
-                System.out.println(articleInfo.toString());
-            }
-        } else {
-            System.out.println("获取失败");
-        }
-
+//        List<ArticleInfo> artList = articleInfoDao.queryArticleInfo(-1, -1, -1, "福",null, 1, 1);
+//        if (!artList.isEmpty() && artList != null){
+//            for (ArticleInfo articleInfo : artList) {
+//                System.out.println(articleInfo.toString());
+//            }
+//        } else {
+//            System.out.println("获取失败");
+//        }
+        String phone = "13415083273";
+        Integer decode = Integer.decode(phone);
+        System.out.println(decode);
     }
 }
