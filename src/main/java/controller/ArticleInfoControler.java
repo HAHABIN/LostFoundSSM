@@ -100,6 +100,15 @@ public class ArticleInfoControler {
         int start = pageNo * pageSize;
         List<ArticleInfo> articleInfoList = articleInfoService.queryArticleInfo(id, userId, typeId, addressContent
                 , description, status, recordStatus, start, pageSize);
+
+        if (articleInfoList.size() == 0){
+            modelMap.put("success", true);
+            modelMap.put("message", "未查询到");
+            modelMap.put("code", 1);
+            modelMap.put("result", articleInfoList);
+            modelMap.put("timestamp", new Date().getTime());
+            return modelMap;
+        }
         if (articleInfoList != null && !articleInfoList.isEmpty()) {
             modelMap.put("success", true);
             modelMap.put("message", "查询物品信息成功");
@@ -107,9 +116,9 @@ public class ArticleInfoControler {
             modelMap.put("result", articleInfoList);
             modelMap.put("timestamp", new Date().getTime());
         } else {
-            modelMap.put("success", false);
+            modelMap.put("success", true);
             modelMap.put("message", "查询物品信息失败");
-            modelMap.put("code", 2);
+            modelMap.put("code", 1);
             modelMap.put("timestamp", new Date().getTime());
         }
         return modelMap;
