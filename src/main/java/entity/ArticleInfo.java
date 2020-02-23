@@ -38,6 +38,16 @@ public class ArticleInfo {
     //最后修改信息时间
     private Date lastEditTime;
 
+    private PersonInfo personInfo;
+
+    public PersonInfo getPersonInfo() {
+        return personInfo;
+    }
+
+    public void setPersonInfo(PersonInfo personInfo) {
+        this.personInfo = personInfo;
+    }
+
     public int getId() {
         return id;
     }
@@ -160,7 +170,7 @@ public class ArticleInfo {
                 ", findTime=" + findTime +
                 ", addressContent='" + addressContent + '\'' +
                 ", description='" + description + '\'' +
-                ", phone=" + phone +
+                ", phone='" + phone + '\'' +
                 ", status=" + status +
                 ", imgStr='" + imgStr + '\'' +
                 ", recordStatus=" + recordStatus +
@@ -168,6 +178,7 @@ public class ArticleInfo {
                 ", backTime=" + backTime +
                 ", createTime=" + createTime +
                 ", lastEditTime=" + lastEditTime +
+                ", personInfo=" + personInfo.toString() +
                 '}';
     }
 }

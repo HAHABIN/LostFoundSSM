@@ -32,6 +32,7 @@ public class ArticleInfoControler {
     @Autowired
     private ArticleInfoService articleInfoService;
 
+
     @RequestMapping(value = "/InsertArInfo", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> InsertArInfo(HttpServletRequest request) {
@@ -77,6 +78,12 @@ public class ArticleInfoControler {
         return modelMap;
     }
 
+    /**
+     * 查询列表 地址模糊查询
+     *
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/QueryArticleInfo", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> QueryArticleInfo(HttpServletRequest request) {
@@ -91,7 +98,7 @@ public class ArticleInfoControler {
         int pageNo = HttpServletRequestUtil.getInt(request, "pageNo");
         int pageSize = HttpServletRequestUtil.getInt(request, "pageSize");
         //分页  最少两行
-        if (pageSize <=2 || pageSize > 20) pageSize = 10;
+        if (pageSize <= 2 || pageSize > 20) pageSize = 10;
         if (pageNo <= 0) {
             pageNo = 0;
         } else {
@@ -101,7 +108,7 @@ public class ArticleInfoControler {
         List<ArticleInfo> articleInfoList = articleInfoService.queryArticleInfo(id, userId, typeId, addressContent
                 , description, status, recordStatus, start, pageSize);
 
-        if (articleInfoList.size() == 0){
+        if (articleInfoList.size() == 0) {
             modelMap.put("success", true);
             modelMap.put("message", "未查询到");
             modelMap.put("code", 1);
@@ -109,6 +116,11 @@ public class ArticleInfoControler {
             modelMap.put("timestamp", new Date().getTime());
             return modelMap;
         }
+        BooleanInfo(modelMap, articleInfoList);
+        return modelMap;
+    }
+
+    private void BooleanInfo(Map<String, Object> modelMap, List<ArticleInfo> articleInfoList) {
         if (articleInfoList != null && !articleInfoList.isEmpty()) {
             modelMap.put("success", true);
             modelMap.put("message", "查询物品信息成功");
@@ -121,6 +133,52 @@ public class ArticleInfoControler {
             modelMap.put("code", 1);
             modelMap.put("timestamp", new Date().getTime());
         }
+    }
+
+    /**
+     * 搜索
+     */
+    @RequestMapping(value = "/searchArInfo", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> searchArInfo(HttpServletRequest request) {
+        Map<String, Object> modelMap = new HashMap<>();
+        String addressContent = HttpServletRequestUtil.getString(request, "addressContent");
+        String description = HttpServletRequestUtil.getString(request, "description");
+        int pageNo = HttpServletRequestUtil.getInt(request, "pageNo");
+        int pageSize = HttpServletRequestUtil.getInt(request, "pageSize");
+        //分页  最少两行
+        if (pageSize <= 2 || pageSize > 20) pageSize = 10;
+        if (pageNo <= 0) {
+            pageNo = 0;
+        } else {
+            pageNo--;
+        }
+        int start = pageNo * pageSize;
+        List<ArticleInfo> articleInfoList = articleInfoService.searchArInfo(addressContent,description,start,pageSize);
+
+        if (articleInfoList.size() == 0) {
+            //模糊查询  内容查询不到的话就查询地址
+            if (description != null) {
+                articleInfoList = articleInfoService.searchArInfo(description,null,start,pageSize);
+                if (articleInfoList.size() == 0) {
+                    modelMap.put("success", true);
+                    modelMap.put("message", "未查询到");
+                    modelMap.put("code", 1);
+                    modelMap.put("result", articleInfoList);
+                    modelMap.put("timestamp", new Date().getTime());
+                    return modelMap;
+                }
+                BooleanInfo(modelMap, articleInfoList);
+                return modelMap;
+            }
+            modelMap.put("success", true);
+            modelMap.put("message", "未查询到");
+            modelMap.put("code", 1);
+            modelMap.put("result", articleInfoList);
+            modelMap.put("timestamp", new Date().getTime());
+            return modelMap;
+        }
+        BooleanInfo(modelMap, articleInfoList);
         return modelMap;
     }
 }

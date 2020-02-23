@@ -19,35 +19,69 @@
         <result column="back_time" property="backTime"/>
         <result column="create_time" property="createTime"/>
         <result column="last_edit_time" property="lastEditTime"/>
+        <association property="personInfo" column="user_id"
+                     javaType="entity.PersonInfo">
+            <id column="user_id" property="userId" />
+            <result column="nick_name" property="nickname" />
+            <result column="profile_img" property="profileImg" />
+            <result column="gender" property="gender" />
+            <result column="email" property="email" />
+            <result column="user_type" property="userType" />
+            <result column="create_time" property="createTime" />
+            <result column="last_edit_time" property="lastEditTime" />
+            <result column="help_times" property="helpTimes" />
+        </association>
     </resultMap>
 
     <select id="queryArticleInfo" resultMap="ArticleInfoResultMap">
-        SELECT * FROM lf_article_info
+        SELECT a.*,p.nick_name,p.profile_img,p.gender,p.help_times
+        FROM lf_article_info a
+        LEFT JOIN
+        lf_person_info p ON
+        a.user_id = p.user_id
         <where>
             <if test="userId!=-1">
-                and user_id = #{userId}
+                and a.user_id = #{userId}
             </if>
             <if test="typeId!=-1">
-                and type_id = #{typeId}
+                and a.type_id = #{typeId}
             </if>
 
             <if test="status!=-1">
-                and status = #{status}
+                and a.status = #{status}
             </if>
             <if test="recordStatus!=-1">
-                and record_status = #{recordStatus}
+                and a.record_status = #{recordStatus}
             </if>
             <if test="addressContent!=null">
-                and address_content LIKE "%"#{addressContent}"%"
+                and a.address_content LIKE "%"#{addressContent}"%"
             </if>
             <if test="description!=null">
-                and description LIKE  "%"#{description}"%"
+                and a.description LIKE  "%"#{description}"%"
             </if>
         </where>
         ORDER BY create_time DESC
         LIMIT #{start} ,#{pageSize}
     </select>
+    <select id="searchArInfo" resultMap="ArticleInfoResultMap">
+        SELECT a.*,p.nick_name,p.profile_img,p.gender,p.help_times
+        FROM lf_article_info a
+        LEFT JOIN
+        lf_person_info p ON
+        a.user_id = p.user_id
 
+        <where>
+            and a.status = a.record_status
+            <if test="addressContent!=null">
+                and a.address_content LIKE "%"#{addressContent}"%"
+            </if>
+            <if test="description!=null">
+                and a.description LIKE  "%"#{description}"%"
+            </if>
+        </where>
+        ORDER BY create_time DESC
+        LIMIT #{start} ,#{pageSize}
+    </select>
     <insert id="insert" parameterType="entity.ArticleInfo">
         INSERT INTO
         lf_article_info(id,type_id,user_id,phone,find_time,address_content

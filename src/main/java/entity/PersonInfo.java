@@ -123,4 +123,19 @@ public class PersonInfo implements Serializable {
     public void setHelpTimes(Integer helpTimes) {
         this.helpTimes = helpTimes;
     }
+
+    @Override
+    public String toString() {
+        return "PersonInfo{" +
+                "userId=" + userId +
+                ", nickname='" + nickname + '\'' +
+                ", profileImg='" + profileImg + '\'' +
+                ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
+                ", userType=" + userType +
+                ", createTime=" + createTime +
+                ", lastEditTime=" + lastEditTime +
+                ", helpTimes=" + helpTimes +
+                '}';
+    }
 }

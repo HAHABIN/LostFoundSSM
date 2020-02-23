@@ -28,6 +28,11 @@ public class ArticleInfoServiceImpl implements ArticleInfoService {
         return articleInfoDao.queryArticleInfo(id,userId,typeId,addressContent,description,status,recordStatus,start,pageSize);
     }
 
+    @Override
+    public List<ArticleInfo> searchArInfo(String addressContent, String description, int start, int pageSize) {
+        return articleInfoDao.searchArInfo(addressContent,description,start,pageSize);
+    }
+
 
     @Override
     public int insert(ArticleInfo articleInfo) {

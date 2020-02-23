@@ -53,16 +53,16 @@ public class ArticleInfoTest extends BaseTest {
     }
     @Test
     public void query() {
-//        List<ArticleInfo> artList = articleInfoDao.queryArticleInfo(-1, -1, -1, "福",null, 1, 1);
-//        if (!artList.isEmpty() && artList != null){
-//            for (ArticleInfo articleInfo : artList) {
-//                System.out.println(articleInfo.toString());
-//            }
-//        } else {
-//            System.out.println("获取失败");
-//        }
-        String phone = "13415083273";
-        Integer decode = Integer.decode(phone);
-        System.out.println(decode);
+        List<ArticleInfo> artList = articleInfoDao.searchArInfo( "汕头",null,1,20);
+        if (!artList.isEmpty() && artList != null){
+            for (ArticleInfo articleInfo : artList) {
+                System.out.println("类型status："+articleInfo.getStatus()+"类型status:"+articleInfo.getRecordStatus()+"--");
+            }
+        } else {
+            System.out.println("获取失败");
+        }
+//        String phone = "13415083273";
+//        Integer decode = Integer.decode(phone);
+//        System.out.println(decode);
     }
 }

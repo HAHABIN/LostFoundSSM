@@ -28,6 +28,18 @@ public interface ArticleInfoService {
                                        @Param("recordStatus")int recordStatus,
                                        @Param("start") int start,
                                        @Param("pageSize") int pageSize);
+
+    /**
+
+     * @param  addressContent 找寻地址
+     * @param  start 第几页
+     * @param  pageSize 每页最多行
+     *
+     * */
+    List<ArticleInfo> searchArInfo(@Param("addressContent") String addressContent,
+                                   @Param("description")String description,
+                                   @Param("start") int start,
+                                   @Param("pageSize") int pageSize);
     /**
      * 添加发布物品
      *
