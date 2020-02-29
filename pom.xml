@@ -223,6 +223,12 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- 阿里云oss  图片，视频等文件上传-->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.8.0</version>
+        </dependency>
     </dependencies>
 
     <build>
