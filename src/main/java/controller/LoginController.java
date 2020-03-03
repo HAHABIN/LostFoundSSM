@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import service.LocalAuthService;
 import service.PersonInfoService;
 import utils.HttpServletRequestUtil;
+import utils.MD5;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +48,7 @@ public class LoginController {
             LocalAuth localAuth = localAuthService.getLocalAuthByUsernameAndPwd(userName, password);
             if (localAuth != null) {
                 // 若帐号密码正确，则验证用户的身份是否为超级管理员
-                if (localAuth.getPersonInfo().getUserType() == 2) {
+                if (localAuth.getPersonInfo().getUserType() <= 2) {
                     modelMap.put("success", true);
                     modelMap.put("message", "登录成功");
                     modelMap.put("code", 1);
@@ -105,7 +106,7 @@ public class LoginController {
             //新增一台平台信息
             int userId = (int) ((Math.random() * 9 + 1) * 1000000);
             PersonInfo personInfo = personInfoService.insertPersonInfo(userId, userName, email);
-            int i = localAuthService.insertLocalAuth(userId,userName,password);
+            int i = localAuthService.insertLocalAuth(userId,userName, MD5.getMd5(password));
             if (i == 1) {
                 modelMap.put("success", true);
                 modelMap.put("message", "注册成功");
@@ -151,7 +152,7 @@ public class LoginController {
                 modelMap.put("timestamp",new Date());
                 return modelMap;
             }
-            if (localAuth.getPassword().equals(password)){
+            if (localAuth.getPassword().equals(MD5.getMd5(password))){
                 int i = localAuthService.updatePassword(userName,password,newpassword);
                 if (i == 1) {
                     modelMap.put("success", true);
@@ -166,7 +167,7 @@ public class LoginController {
                 }
             } else {
                 modelMap.put("success", false);
-                modelMap.put("message", "密码错误");
+                modelMap.put("message", "原密码错误");
                 modelMap.put("code", 2);
                 modelMap.put("timestamp",new Date());
             }

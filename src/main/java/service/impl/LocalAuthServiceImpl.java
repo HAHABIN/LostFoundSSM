@@ -7,6 +7,7 @@ import entity.PersonInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.LocalAuthService;
+import utils.MD5;
 
 import java.util.Date;
 /**
@@ -20,9 +21,7 @@ public class LocalAuthServiceImpl implements LocalAuthService {
 
     @Override
     public LocalAuth getLocalAuthByUsernameAndPwd(String username, String password) {
-//        return localAuthDao.queryLocalByUserNameAndPwd(username, MD5.getMd5(password));
-
-        return localAuthDao.queryLocalByUserNameAndPwd(username, password);
+        return localAuthDao.queryLocalByUserNameAndPwd(username, MD5.getMd5(password));
     }
 
     @Override
@@ -38,14 +37,12 @@ public class LocalAuthServiceImpl implements LocalAuthService {
 
     @Override
     public int insertLocalAuth(LocalAuth localAuth ) {
-
-
         return localAuthDao.insertLocalAuth(localAuth);
     }
 
     @Override
     public int updatePassword(String username, String password, String newPassword) {
-        return localAuthDao.updatePassword(username,password,newPassword,new Date());
+        return localAuthDao.updatePassword(username,MD5.getMd5(password),MD5.getMd5(newPassword),new Date());
     }
 
     @Override
