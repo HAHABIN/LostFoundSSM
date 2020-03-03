@@ -63,11 +63,11 @@ public class ArticleTypeController {
         List<ArticleType> articleTypeList =  articleType.queryArticleType(typeId,typeName,priority);
 
         if (articleTypeList != null && !articleTypeList.isEmpty()){
-//            modelMap.put("success", true);
-//            modelMap.put("message", "获取物品类型信息成功");
-//            modelMap.put("code", 1);
+            modelMap.put("success", true);
+            modelMap.put("message", "获取物品类型信息成功");
+            modelMap.put("code", 1);
             modelMap.put("result",articleTypeList);
-//            modelMap.put("timestamp",new Date());
+            modelMap.put("timestamp",new Date());
         } else {
             modelMap.put("success", false);
             modelMap.put("message", "获取物品类型信息失败");

@@ -13,18 +13,18 @@
     <!-- 1.开启SpringMVC注解模式 -->
     <!-- 简化配置： (1)自动注册DefaultAnootationHandlerMapping,AnotationMethodHandlerAdapter
         (2)提供一些列：数据绑定，数字和日期的format @NumberFormat, @DateTimeFormat, xml,json默认读写支持 -->
-    <mvc:annotation-driven />
+    <mvc:annotation-driven/>
 
     <!-- 2.静态资源默认servlet配置 (1)加入对静态资源的处理：js,gif,png (2)允许使用"/"做整体映射 -->
-   <!-- <mvc:resources mapping="/resources/**"
-                   location="/resources/" />-->
-    <mvc:default-servlet-handler />
+    <!-- <mvc:resources mapping="/resources/**"
+                    location="/resources/" />-->
+    <mvc:default-servlet-handler/>
 
     <!-- 3.定义视图解析器 -->
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/"></property>
-        <property name="suffix" value=".jsp"></property>
+        <property name="prefix" value="/WEB-INF/html/"></property>
+        <property name="suffix" value=".html"></property>
     </bean>
     <!-- 文件上传解析器 -->
     <bean id="multipartResolver"
@@ -37,12 +37,25 @@
     <mvc:annotation-driven>
         <mvc:message-converters register-defaults="true">
             <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
-                <property name="supportedMediaTypes"  value="application/json;charset=UTF-8"/>
+                <property name="supportedMediaTypes" value="application/json;charset=UTF-8"/>
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
 
     <!-- 4.扫描web相关的bean -->
     <context:component-scan
-            base-package="controller" />
+            base-package="controller"/>
+    <!--5.拦截器-->
+    <!--拦截器 -->
+    <mvc:interceptors>
+        <!--登陆拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/superadmin/*"/>
+            <mvc:exclude-mapping path="/superadmin/login"/>
+            <mvc:exclude-mapping path="/superadmin/logincheck"/>
+            <bean class="interceptor.superadmin.SuperAdminInterceptor">
+            </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>
