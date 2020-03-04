@@ -4,7 +4,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--用户信息表数据库操作-->
 <mapper namespace="dao.PersonInfoDao">
-
+    <resultMap id="PersonInfoResultMap" type="entity.PersonInfo">
+        <id column="user_id" property="userId" />
+        <result column="nick_name" property="nickname" />
+        <result column="profile_img" property="profileImg" />
+        <result column="email" property="email" />
+        <result column="gender" property="gender" />
+        <result column="user_type" property="userType" />
+        <result column="create_time" property="createTime" />
+        <result column="last_edit_time" property="lastEditTime" />
+        <result column="help_times" property="helpTimes" />
+    </resultMap>
     <!--通过ID查询用户-->
     <select id="queryPersonInfoById" resultType="entity.PersonInfo"
             parameterType="Long">
@@ -13,7 +23,12 @@
         where
         user_id = #{userId}
     </select>
+    <select id="query" resultMap="PersonInfoResultMap"
+            >
+        SELECT *
+        FROM lf_person_info
 
+    </select>
 
     <!--新增用户-->
     <!--            useGeneratedKeys="true" keyProperty="userId" keyColumn="user_id">-->

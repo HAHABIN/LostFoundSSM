@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>失物寻回后台管理系统</title>
+    <!--防止中文乱码 -->
+    <meta meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--easyUi必要    顺序-->
+    <!-- 引入jquery文件  easyUI基于它  -->
+    <script src="../../../resources/js/jquery-easyui-1.7.0/jquery.min.js"></script>
+    <!-- easyUI 迷你版  -->
+    <script src="../../../resources/js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+    <!-- easyUI 默认样式文件   -->
+    <link rel="stylesheet" href="../../../resources/js/jquery-easyui-1.7.0/themes/default/easyui.css">
+    <!-- easyUI 图标样式文件   -->
+    <link rel="stylesheet" href="../../../resources/js/jquery-easyui-1.7.0/themes/icon.css">
+    <!-- 国际化  中文   -->
+    <script src="../../../resources/js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
+    <!--引入自己写的js    -->
+    <script src="../../../resources/js/superadmin/main.js"></script>
+</head>
+<body class="easyui-layout">
+<!--左边菜单栏    -->
+<div data-options="region:'west',split:true,title:'菜单栏'" style="width:150px;">
+    <div id="aa" class="easyui-accordion" style="width:100%;">
+        <!-- selected -->
+        <div title="系统管理" data-options="iconCls:'icon-tip',selected:true">
+            <ul>
+                <li><a
+                        href="javascript:addTab('tabId_headTitleManagement','头条管理','headlinemanage');">头条管理</a></li>
+                <li><a
+                        href="javascript:addTab('tabId_articleTypeManagement','类别管理','articletypemanage');">类别管理</a>
+                </li>
+                <li><a
+                        href="javascript:addTab('tabId_areaManagement','区域管理','areamanage');">区域管理</a></li>
+                <li><a
+                        href="javascript:addTab('tabId_personInfomanagent','帐号管理','personinfomanage');">帐号管理</a></li>
+                <li><a
+                        href="javascript:addTab('tabId_articleInfoManagement','发布信息管理','articleinfomanage');">发布信息管理</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--中间主要功能区    -->
+<div data-options="region:'center',title:'功能区'">
+    <div id="centerTab" class="easyui-tabs" style="width:100%;height:100%;">
+        <div title="欢迎页" style="padding: 20px; overflow: hidden;">
+            <div>
+                <h3>你好，欢迎来到失物寻回后台管理系统</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+     closed="true" buttons="#dlg-buttons">
+    <div class="ftitle">User Information</div>
+    <form id="fm" method="post">
+        <div class="fitem">
+            <label>First Name:</label>
+            <input name="firstname" class="easyui-validatebox" required="true">
+        </div>
+        <div class="fitem">
+            <label>Last Name:</label>
+            <input name="lastname" class="easyui-validatebox" required="true">
+        </div>
+        <div class="fitem">
+            <label>Phone:</label>
+            <input name="phone">
+        </div>
+        <div class="fitem">
+            <label>Email:</label>
+            <input name="email" class="easyui-validatebox" validType="email">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveUser()">Save</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel"
+       onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
+</div>
+</body>
+</html>

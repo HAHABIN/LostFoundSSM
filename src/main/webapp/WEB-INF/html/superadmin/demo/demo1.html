@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Demo1</title>
+    <!--防止中文乱码 -->
+    <meta meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--easyUi必要    顺序-->
+    <!-- 引入jquery文件  easyUI基于它  -->
+    <script src="../../../../resources/js/jquery-easyui-1.7.0/jquery.min.js"></script>
+    <!-- easyUI 迷你版  -->
+    <script src="../../../../resources/js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+    <!-- easyUI 默认样式文件   -->
+    <link rel="stylesheet" href="../../../../resources/js/jquery-easyui-1.7.0/themes/default/easyui.css">
+    <!-- easyUI 图标样式文件   -->
+    <link rel="stylesheet" href="../../../../resources/js/jquery-easyui-1.7.0/themes/icon.css">
+    <!-- 国际化  中文   -->
+    <script src="../../../../resources/js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
+    <!--引入自己写的js    -->
+    <script src="../../../resources/js/demo/demo1.js"></script>
+
+</head>
+    <body>
+
+
+
+
+        <!--toolbar 将此行作为首行   easyui-datagrid表格格式-->
+        <table id="datagridDemo1" title="用户信息" class="easyui-datagrid" style="width:550px;height:250px"
+               toolbar="#toolbar"
+               rownumbers="true" fitColumns="true" singleSelect="true">
+            <thead>
+            <tr>
+                <th field="firstname" width="50">First Name</th>
+                <th field="lastname" width="50">Last Name</th>
+                <th field="phone" width="50">Phone</th>
+                <th field="email" width="50">Email</th>
+            </tr>
+            </thead>
+        </table>
+        <!--被引用-->
+        <div id="toolbar">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">新增</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">修改</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">删除</a>
+        </div>
+
+<!--        新增-->
+        <div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+             closed="true" buttons="#dlg-buttons">
+            <div class="ftitle">User Information</div>
+            <form id="fm" method="post">
+                <div class="fitem">
+                    <label>First Name:</label>
+                    <input name="firstname" class="easyui-validatebox" required="true">
+                </div>
+                <div class="fitem">
+                    <label>Last Name:</label>
+                    <input name="lastname" class="easyui-validatebox" required="true">
+                </div>
+                <div class="fitem">
+                    <label>Phone:</label>
+                    <input name="phone">
+                </div>
+                <div class="fitem">
+                    <label>Email:</label>
+                    <input name="email" class="easyui-validatebox" validType="email">
+                </div>
+            </form>
+        </div>
+        <div id="dlg-buttons">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveUser()">Save</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
+        </div>
+    </body>
+</html>

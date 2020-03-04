@@ -53,6 +53,7 @@
             <mvc:mapping path="/superadmin/*"/>
             <mvc:exclude-mapping path="/superadmin/login"/>
             <mvc:exclude-mapping path="/superadmin/logincheck"/>
+            <mvc:exclude-mapping path="/superadmin/showpersoninfo"/>
             <bean class="interceptor.superadmin.SuperAdminInterceptor">
             </bean>
         </mvc:interceptor>

@@ -2,6 +2,8 @@ package service;
 
 import entity.PersonInfo;
 
+import java.util.List;
+
 /**
  * @author HABIN
  * @date 2020/2/7 14:11
@@ -30,5 +32,7 @@ public interface PersonInfoService {
 
 
     int updatePersonInfo(PersonInfo personInfo);
+
+    List<PersonInfo> query();
 
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import service.PersonInfoService;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author HABIN
@@ -30,7 +31,7 @@ public class PersonInfoServiceImpl implements PersonInfoService {
         //设置用户信息
         PersonInfo personInfo = new PersonInfo();
         personInfo.setUserId(userId);
-        personInfo.setName(username);
+        personInfo.setNickname(username);
         personInfo.setEmail(email);
         personInfo.setUserType(2);
         personInfo.setHelpTimes(0);
@@ -42,6 +43,11 @@ public class PersonInfoServiceImpl implements PersonInfoService {
     @Override
     public int updatePersonInfo(PersonInfo personInfo) {
         return personInfoDao.updatePersonInfo(personInfo);
+    }
+
+    @Override
+    public List<PersonInfo> query() {
+        return personInfoDao.query();
     }
 
 }

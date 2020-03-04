@@ -60,11 +60,11 @@ public class PersonInfo implements Serializable {
         this.userId = userId;
     }
 
-    public String getName() {
+    public String getNickname() {
         return nickname;
     }
 
-    public void setName(String nickname) {
+    public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
