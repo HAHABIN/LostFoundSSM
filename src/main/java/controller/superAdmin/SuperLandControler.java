@@ -89,12 +89,15 @@ public class SuperLandControler {
         //重定向到登录页面的跳转方法
         return "redirect:login";
     }
+
     @RequestMapping(value = "/showpersoninfo" , method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> showPersonInfo(HttpServletRequest request) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-
-        List<PersonInfo> personInfoList = personInfoService.query();
+        // 获取前端传递过来的帐号和密码
+        long userId = HttpServletRequestUtil.getLong(request, "userId");
+        String nickname = HttpServletRequestUtil.getString(request, "nickname");
+        List<PersonInfo> personInfoList = personInfoService.queryByIdOrName(userId,nickname);
         if (personInfoList!=null){
             modelMap.put("success", true);
             modelMap.put("message", "用户信息请求成功");

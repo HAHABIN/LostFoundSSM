@@ -6,7 +6,7 @@
 });
 
 function logout() {
-    var logoutURL = "logout"; //用于注销用户的url
+    var logoutURL = "../superadmin/logout"; //用于注销用户的url
     if (logoutURL == "")
         return;
     $.ajax({
@@ -44,7 +44,7 @@ function doLogin() {
         cache: false,
         type: "post",
         dataType: 'json',
-        url: "logincheck" + "?t=" + (new Date()).getTime().toString(),// 请求的action路径
+        url: "../superadmin/logincheck" + "?t=" + (new Date()).getTime().toString(),// 请求的action路径
         data: {
             username: $("#username").val(),
             password: $("#password").val()

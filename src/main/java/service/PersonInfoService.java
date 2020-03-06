@@ -1,6 +1,7 @@
 package service;
 
 import entity.PersonInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -34,5 +35,23 @@ public interface PersonInfoService {
     int updatePersonInfo(PersonInfo personInfo);
 
     List<PersonInfo> query();
+    /**
+     * 通过用户Id 查询用户
+     *
+     **/
+    List<PersonInfo> queryByIdOrName(@Param("userId")long userId, @Param("nickname")String nickname);
 
+    /**
+     * 单个删除
+     * @param userId
+     * @return
+     */
+    int delete(long userId);
+
+    /**
+     * 批量删除头条
+     * @param lineIdList
+     * @return
+     */
+    int batchDeletePsrsonInfo(List<Long> lineIdList);
 }

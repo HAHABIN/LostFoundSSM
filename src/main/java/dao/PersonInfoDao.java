@@ -1,6 +1,7 @@
 package dao;
 
 import entity.PersonInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,12 +12,12 @@ import java.util.List;
 public interface PersonInfoDao extends BaseDao<PersonInfo> {
 
     /**
-     * 通过用户Id查询用户
+     * 通过用户Id 查询用户
      *
      * @param userId
      * @return
      */
-    PersonInfo queryPersonInfoById(long userId);
+    PersonInfo queryPersonInfoById(@Param("userId")long userId);
 
     /**
      * 添加用户信息
@@ -38,4 +39,19 @@ public interface PersonInfoDao extends BaseDao<PersonInfo> {
      **/
     @Override
     List<PersonInfo> query();
+    /**
+     * 通过用户Id 查询用户
+     *
+     **/
+    List<PersonInfo> queryByIdOrName(@Param("userId")long userId, @Param("nickname")String nickname);
+
+    int deleteById(@Param("userId")long userId);
+
+
+    /**
+     * 批量删除头条
+     * @param lineIdList
+     * @return
+     */
+    int batchDeletePsrsonInfo(List<Long> lineIdList);
 }

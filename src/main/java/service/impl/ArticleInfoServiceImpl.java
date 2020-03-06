@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.ArticleInfoService;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +30,11 @@ public class ArticleInfoServiceImpl implements ArticleInfoService {
     }
 
     @Override
+    public ArticleInfo queryArticleById(int id) {
+        return articleInfoDao.queryArticleById(id);
+    }
+
+    @Override
     public List<ArticleInfo> searchArInfo(String addressContent, String description, int start, int pageSize) {
         return articleInfoDao.searchArInfo(addressContent,description,start,pageSize);
     }
@@ -40,7 +46,19 @@ public class ArticleInfoServiceImpl implements ArticleInfoService {
     }
 
     @Override
-    public int update(ArticleInfo articleInfo) {
-        return articleInfoDao.update(articleInfo);
+    public int updateArticle(ArticleInfo articleInfo) {
+        return articleInfoDao.updateArticle(articleInfo);
     }
+
+    @Override
+    public int updateArticleStatus(int id, int recordStatus, Date backTime, Date lastEditTime) {
+        return articleInfoDao.updateArticleStatus(id,recordStatus,backTime,lastEditTime);
+    }
+
+
+    @Override
+    public int deleteById(int id) {
+        return articleInfoDao.deleteById(id);
+    }
+
 }

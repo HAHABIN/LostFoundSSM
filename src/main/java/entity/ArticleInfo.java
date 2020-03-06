@@ -1,5 +1,8 @@
 package entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,7 +10,7 @@ import java.util.Date;
  * @date 2020/2/18 15:21
  * 物品信息
  */
-public class ArticleInfo {
+public class ArticleInfo implements Serializable {
 
     //物品id
     private int id;
@@ -16,6 +19,7 @@ public class ArticleInfo {
     //发布者id
     private int userId;
     //拾物时间或者丢失时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date findTime;
     //物品详细地址
     private String addressContent;
@@ -32,20 +36,19 @@ public class ArticleInfo {
     //帮助者id
     private int helperId;
     //完成时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date backTime;
     //发布时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
     //最后修改信息时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastEditTime;
 
     private PersonInfo personInfo;
 
     public PersonInfo getPersonInfo() {
         return personInfo;
-    }
-
-    public void setPersonInfo(PersonInfo personInfo) {
-        this.personInfo = personInfo;
     }
 
     public int getId() {
@@ -80,14 +83,6 @@ public class ArticleInfo {
         this.findTime = findTime;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getAddressContent() {
         return addressContent;
     }
@@ -104,6 +99,13 @@ public class ArticleInfo {
         this.description = description;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public int getStatus() {
         return status;
@@ -137,13 +139,10 @@ public class ArticleInfo {
         this.helperId = helperId;
     }
 
-    public Date getBackTime() {
-        return backTime;
-    }
-
     public void setBackTime(Date backTime) {
         this.backTime = backTime;
     }
+
 
     public Date getCreateTime() {
         return createTime;
@@ -161,24 +160,9 @@ public class ArticleInfo {
         this.lastEditTime = lastEditTime;
     }
 
-    @Override
-    public String toString() {
-        return "ArticleInfo{" +
-                "id=" + id +
-                ", typeId=" + typeId +
-                ", userId=" + userId +
-                ", findTime=" + findTime +
-                ", addressContent='" + addressContent + '\'' +
-                ", description='" + description + '\'' +
-                ", phone='" + phone + '\'' +
-                ", status=" + status +
-                ", imgStr='" + imgStr + '\'' +
-                ", recordStatus=" + recordStatus +
-                ", helperId=" + helperId +
-                ", backTime=" + backTime +
-                ", createTime=" + createTime +
-                ", lastEditTime=" + lastEditTime +
-                ", personInfo=" + personInfo.toString() +
-                '}';
+    public void setPersonInfo(PersonInfo personInfo) {
+        this.personInfo = personInfo;
     }
+
+
 }

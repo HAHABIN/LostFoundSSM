@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.*;
 import com.aliyun.oss.model.Bucket;
 import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.ObjectMetadata;
@@ -47,8 +47,8 @@ public class AliyunOSSClientUtil {
      * 获取阿里云OSS客户端对象
      * @return ossClient
      */
-    public static  OSSClient getOSSClient(){
-        return new OSSClient(ENDPOINT,ACCESS_KEY_ID, ACCESS_KEY_SECRET);
+    public static OSS getOSSClient(){
+        return  new OSSClientBuilder().build(ENDPOINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
     }
 
     /**
@@ -86,7 +86,7 @@ public class AliyunOSSClientUtil {
      * @param folder   模拟文件夹名如"qj_nanjing/"
      * @return  文件夹名
      */
-    public  static String createFolder(OSSClient ossClient,String bucketName,String folder){
+    public  static String createFolder(OSS ossClient,String bucketName,String folder){
         //文件夹名
         final String keySuffixWithSlash =folder;
         //判断文件夹是否存在，不存在则创建
@@ -123,14 +123,26 @@ public class AliyunOSSClientUtil {
     }
     /**
      * 根据key删除OSS服务器上的文件
-     * @param ossClient  oss连接
-     * @param bucketName  存储空间
-     * @param folder  模拟文件夹名 如"qj_nanjing/"
      * @param key Bucket下的文件的路径名+文件名 如："upload/cake.jpg"
      */
-    public static void deleteFile(OSSClient ossClient, String bucketName, String folder, String key){
-        ossClient.deleteObject(bucketName, folder + key);
-        logger.info("删除" + bucketName + "下的文件" + folder + key + "成功");
+    public static void deleteFile( String key){
+        if (key!=null){
+            key = key.substring(49);
+            OSS ossClient = getOSSClient();
+            try {
+                ossClient.deleteObject(BACKET_NAME,  key);
+                logger.info("删除" + BACKET_NAME + "下的文件" +  key + "成功");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                ossClient.shutdown();
+            }
+
+
+        } else {
+            logger.info("图片为空");
+        }
+
     }
 
     /**
@@ -141,7 +153,7 @@ public class AliyunOSSClientUtil {
      * @param folder 模拟文件夹名 如"qj_nanjing/"
      * @return String 返回的唯一MD5数字签名
      * */
-    public static  String uploadObject2OSS(OSSClient ossClient, File file, String bucketName, String folder) {
+    public static  String uploadObject2OSS(OSS  ossClient, File file, String bucketName, String folder) {
         String resultStr = null;
         try {
             //以输入流的形式上传文件
@@ -151,7 +163,7 @@ public class AliyunOSSClientUtil {
             //文件大小
             Long fileSize = file.length();
             //创建上传Object的Metadata
-            PutObjectResult putResult = getPutObjectResult(ossClient, bucketName, folder, is, fileName);
+            PutObjectResult putResult = getPutObjectResult(bucketName, folder, is, fileName);
             //解析结果
             resultStr = putResult.getETag();
         } catch (Exception e) {
@@ -162,13 +174,13 @@ public class AliyunOSSClientUtil {
     }
     /**
      * 上传图片至OSS
-     * @param ossClient  oss连接
      * @param imageByte 图片流
      * @param bucketName  存储空间
      * @param folder 模拟文件夹名 如"qj_nanjing/"
      * @return String 返回的唯一MD5数字签名
      * */
-    public static  String uploadObject1OSS(OSSClient ossClient, byte[] imageByte, String bucketName, String folder) {
+    public static  String uploadObject1OSS( byte[] imageByte, String bucketName, String folder) {
+
         String resultStr = null;
         try {
             //以输入流的形式上传文件
@@ -180,7 +192,7 @@ public class AliyunOSSClientUtil {
             //文件大小
 //            Long fileSize = file.length();
             //创建上传Object的Metadata
-            PutObjectResult putResult = getPutObjectResult(ossClient, bucketName, destfile, is, fileName);
+            PutObjectResult putResult = getPutObjectResult(bucketName, destfile, is, fileName);
             //返回地址
             resultStr = HTTPADDRES + destfile +fileName;
         } catch (Exception e) {
@@ -190,7 +202,10 @@ public class AliyunOSSClientUtil {
         return resultStr;
     }
 
-    private static PutObjectResult getPutObjectResult(OSSClient ossClient, String bucketName, String folder, InputStream is, String fileName) throws IOException {
+
+    private static PutObjectResult getPutObjectResult(String bucketName, String folder, InputStream is, String fileName) throws IOException {
+        //初始化
+        OSS ossClient = getOSSClient();
         ObjectMetadata metadata = new ObjectMetadata();
         //上传的文件的长度
         metadata.setContentLength(is.available());
@@ -207,7 +222,20 @@ public class AliyunOSSClientUtil {
 //            metadata.setContentDisposition("filename/filesize=" + fileName + "/" + fileSize + "Byte.")
         metadata.setContentDisposition(null);
         //上传文件   (上传文件流的形式)
-        return ossClient.putObject(bucketName, folder + fileName, is, metadata);
+        try {
+            return ossClient.putObject(bucketName, folder + fileName, is, metadata);
+        }catch (OSSException oe) {
+            oe.printStackTrace();
+        } catch (ClientException ce) {
+            ce.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        finally {
+            ossClient.shutdown();
+        }
+       return null;
     }
 
     /**
@@ -251,17 +279,20 @@ public class AliyunOSSClientUtil {
 
     //测试
     public static void main(String[] args) {
+        String l = "http://habin-picload.oss-cn-beijing.aliyuncs.com/upload/image/20200301/20200301022157582.jpeg";
+//        logger.info("长度:" + l.substring(71));
+        deleteFile(l);
         //初始化OSSClient
-        OSSClient ossClient=AliyunOSSClientUtil.getOSSClient();
-        //上传文件
-        String files="C:\\Users\\HABIN\\Desktop\\908fa0ec08fa513dfac17efa93bdd5ffb3fbd984.jpeg";
-        String[] file=files.split(",");
-        for(String filename:file){
-            //System.out.println("filename:"+filename);
-            File filess=new File(filename);
-            String md5key = AliyunOSSClientUtil.uploadObject2OSS(ossClient, filess, BACKET_NAME, FOLDER);
-            logger.info("上传后的文件MD5数字唯一签名:" + md5key);
-            //上传后的文件MD5数字唯一签名:40F4131427068E08451D37F02021473A
-        }
+//        OSS  ossClient=AliyunOSSClientUtil.getOSSClient();
+//        //上传文件
+//        String files="C:\\Users\\HABIN\\Desktop\\908fa0ec08fa513dfac17efa93bdd5ffb3fbd984.jpeg";
+//        String[] file=files.split(",");
+//        for(String filename:file){
+//            //System.out.println("filename:"+filename);
+//            File filess=new File(filename);
+//            String md5key = AliyunOSSClientUtil.uploadObject2OSS(ossClient, filess, BACKET_NAME, FOLDER);
+//            logger.info("上传后的文件MD5数字唯一签名:" + md5key);
+//            //上传后的文件MD5数字唯一签名:40F4131427068E08451D37F02021473A
+//        }
     }
 }

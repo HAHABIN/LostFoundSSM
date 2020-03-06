@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping(value = "/superadmin", method = { RequestMethod.GET, RequestMethod.POST })
+@RequestMapping(value = "/superadminPage", method = { RequestMethod.GET, RequestMethod.POST })
 public class SuperAdminController {
 
 	@RequestMapping(value = "/areamanage", method = RequestMethod.GET)

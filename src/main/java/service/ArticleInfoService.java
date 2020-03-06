@@ -3,6 +3,7 @@ package service;
 import entity.ArticleInfo;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,6 +31,14 @@ public interface ArticleInfoService {
                                        @Param("pageSize") int pageSize);
 
     /**
+     * 通过用户Id 查询物品
+     *
+     * @param id
+     * @return
+     */
+    ArticleInfo queryArticleById(@Param("id")int id);
+
+    /**
 
      * @param  addressContent 找寻地址
      * @param  start 第几页
@@ -50,5 +59,18 @@ public interface ArticleInfoService {
      * 更新物品信息
      *
      * */
-    int update(ArticleInfo articleInfo);
+    int updateArticle(ArticleInfo articleInfo);
+    /**
+     *更新物品状态
+     */
+    int updateArticleStatus(@Param("id")int id,
+                            @Param("recordStatus")int recordStatus,
+                            @Param("backTime") Date backTime,
+                            @Param("lastEditTime")Date lastEditTime);
+    /**
+     *
+     *删除物品信息
+     *
+     * */
+    int deleteById(@Param("id")int id);
 }

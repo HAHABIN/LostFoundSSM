@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.PersonInfoService;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -23,7 +23,7 @@ public class PersonInfoServiceImpl implements PersonInfoService {
 
     @Override
     public PersonInfo queryPersonInfoById(long userId) {
-        return null;
+        return personInfoDao.queryPersonInfoById(userId);
     }
 
     @Override
@@ -33,9 +33,9 @@ public class PersonInfoServiceImpl implements PersonInfoService {
         personInfo.setUserId(userId);
         personInfo.setNickname(username);
         personInfo.setEmail(email);
-        personInfo.setUserType(2);
+        personInfo.setUserType(1);
         personInfo.setHelpTimes(0);
-        personInfo.setCreateTime(new Date());
+        personInfo.setCreateTime(new Date(System.currentTimeMillis()));
         personInfoDao.insertPersonInfo(personInfo);
         return personInfo;
     }
@@ -48,6 +48,21 @@ public class PersonInfoServiceImpl implements PersonInfoService {
     @Override
     public List<PersonInfo> query() {
         return personInfoDao.query();
+    }
+
+    @Override
+    public List<PersonInfo> queryByIdOrName(long userId, String nickname) {
+        return personInfoDao.queryByIdOrName(userId,nickname);
+    }
+
+    @Override
+    public int delete(long userId) {
+        return personInfoDao.deleteById(userId);
+    }
+
+    @Override
+    public int batchDeletePsrsonInfo(List<Long> lineIdList) {
+        return 0;
     }
 
 }

@@ -138,3 +138,47 @@ function hasNonDigit(str) {
 		return false;
 	}
 }
+
+// 时间戳转日期(包含年月日)
+function getday(timestamp) {
+	if(timestamp){
+		let date = new Date(parseInt(timestamp))
+		let Y = date.getFullYear() + '-'
+		let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+		let D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
+		let h = (date.getHours() < 10 ? '0' +  date.getHours() :  date.getHours())  + ':'
+		let m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':'
+		let s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+		return Y + M + D
+	}else{
+		return ""
+	}
+}
+// 时间戳转日期(包含时分秒)
+function gethour(timestamp) {
+	if(timestamp){
+		let date = new Date(parseInt(timestamp))
+		let Y = date.getFullYear() + '-'
+		let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+		let D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
+		let h = (date.getHours() < 10 ? '0' +  date.getHours() :  date.getHours())  + ':'
+		let m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':'
+		let s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds())
+		return Y+M+D+" "+h + m + s;
+	}else{
+		return ""
+	}
+}
+
+function showMessage(message){
+	$.messager.show({
+		title:'系统提示',
+		msg:message,
+		showType:'show',
+		style:{
+			right:'',
+			top:document.body.scrollTop+document.documentElement.scrollTop,
+			bottom:''
+		}
+	});
+}

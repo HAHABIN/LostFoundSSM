@@ -1,19 +1,18 @@
 package controller;
 
+import com.google.gson.reflect.TypeToken;
 import entity.ArticleInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.ArticleInfoService;
+import utils.AliyunOSSClientUtil;
 import utils.HttpServletRequestUtil;
 import utils.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -67,14 +66,47 @@ public class ArticleInfoControler {
             modelMap.put("success", true);
             modelMap.put("message", "新增物品信息成功");
             modelMap.put("code", 1);
-            modelMap.put("timestamp", new Date().getTime());
+            modelMap.put("timestamp", new Date());
         } else {
             modelMap.put("success", false);
             modelMap.put("message", "新增物品信息失败");
             modelMap.put("code", 2);
-            modelMap.put("timestamp", new Date().getTime());
+            modelMap.put("timestamp", new Date());
         }
 
+        return modelMap;
+    }
+
+
+    /**
+     * 更新物品状态
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/updateArticleStatus")
+    @ResponseBody
+    public Map<String, Object> updateArticleStatus(HttpServletRequest request) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        int id = HttpServletRequestUtil.getInt(request, "id");
+        int recordStatus = HttpServletRequestUtil.getInt(request, "recordStatus");
+        int ss;
+        if (recordStatus == 3) {
+            ss = articleInfoService.updateArticleStatus(id, recordStatus, new Date(), new Date());
+        } else {
+            ss = articleInfoService.updateArticleStatus(id, recordStatus, null, new Date());
+        }
+        if (ss==1){
+            modelMap.put("success", true);
+            modelMap.put("message", "更新成功");
+            modelMap.put("code", 1);
+            modelMap.put("timestamp", new Date());
+        } else {
+            modelMap.put("success", false);
+            modelMap.put("message", "更新失败");
+            modelMap.put("code", 1);
+            modelMap.put("timestamp", new Date());
+        }
         return modelMap;
     }
 
@@ -113,7 +145,7 @@ public class ArticleInfoControler {
             modelMap.put("message", "未查询到");
             modelMap.put("code", 1);
             modelMap.put("result", articleInfoList);
-            modelMap.put("timestamp", new Date().getTime());
+            modelMap.put("timestamp", new Date());
             return modelMap;
         }
         BooleanInfo(modelMap, articleInfoList);
@@ -126,12 +158,12 @@ public class ArticleInfoControler {
             modelMap.put("message", "查询物品信息成功");
             modelMap.put("code", 1);
             modelMap.put("result", articleInfoList);
-            modelMap.put("timestamp", new Date().getTime());
+            modelMap.put("timestamp", new Date());
         } else {
             modelMap.put("success", true);
             modelMap.put("message", "查询物品信息失败");
             modelMap.put("code", 1);
-            modelMap.put("timestamp", new Date().getTime());
+            modelMap.put("timestamp", new Date());
         }
     }
 
@@ -154,18 +186,18 @@ public class ArticleInfoControler {
             pageNo--;
         }
         int start = pageNo * pageSize;
-        List<ArticleInfo> articleInfoList = articleInfoService.searchArInfo(addressContent,description,start,pageSize);
+        List<ArticleInfo> articleInfoList = articleInfoService.searchArInfo(addressContent, description, start, pageSize);
 
         if (articleInfoList.size() == 0) {
             //模糊查询  内容查询不到的话就查询地址
             if (description != null) {
-                articleInfoList = articleInfoService.searchArInfo(description,null,start,pageSize);
+                articleInfoList = articleInfoService.searchArInfo(description, null, start, pageSize);
                 if (articleInfoList.size() == 0) {
                     modelMap.put("success", true);
                     modelMap.put("message", "未查询到");
                     modelMap.put("code", 1);
                     modelMap.put("result", articleInfoList);
-                    modelMap.put("timestamp", new Date().getTime());
+                    modelMap.put("timestamp", new Date());
                     return modelMap;
                 }
                 BooleanInfo(modelMap, articleInfoList);
@@ -175,10 +207,72 @@ public class ArticleInfoControler {
             modelMap.put("message", "未查询到");
             modelMap.put("code", 1);
             modelMap.put("result", articleInfoList);
-            modelMap.put("timestamp", new Date().getTime());
+            modelMap.put("timestamp", new Date());
             return modelMap;
         }
         BooleanInfo(modelMap, articleInfoList);
+        return modelMap;
+    }
+
+    /**
+     * 批量删除用户
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/batchdeleteArticle", method = RequestMethod.POST)
+    @ResponseBody
+    private Map<String, Object> batchdeleteArticle(HttpServletRequest request) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        String DeleteIndexArr = HttpServletRequestUtil.getString(request, "DeleteIndexArr");
+        int deleteFruit = 0;
+        String[] ids = DeleteIndexArr.split(",");
+
+        for (String aid : ids) {
+            int id = Integer.parseInt(aid);
+            ArticleInfo articleInfo = articleInfoService.queryArticleById(id);
+            List<String> imgStrList = StringUtils.fromJson(articleInfo.getImgStr(), new TypeToken<List<String>>() {
+            });
+            for (String imgStr : imgStrList) {
+                AliyunOSSClientUtil.deleteFile(imgStr);
+            }
+            int delete = articleInfoService.deleteById(id);
+            if (delete == 1) {
+                deleteFruit++;
+            }
+        }
+        modelMap.put("success", true);
+        modelMap.put("message", "删除成功");
+        modelMap.put("code", 1);
+        modelMap.put("DeleteCounts", deleteFruit);
+        modelMap.put("timestamp", new Date());
+        return modelMap;
+    }
+
+    @RequestMapping(value = "/deleteArticle", method = RequestMethod.POST)
+    @ResponseBody
+    private Map<String, Object> deleteArticle(HttpServletRequest request) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        int id = HttpServletRequestUtil.getInt(request, "id");
+
+        ArticleInfo articleInfo = articleInfoService.queryArticleById(id);
+        List<String> imgStrList = StringUtils.fromJson(articleInfo.getImgStr(), new TypeToken<List<String>>() {
+        });
+        for (String imgStr : imgStrList) {
+            AliyunOSSClientUtil.deleteFile(imgStr);
+        }
+        int delete = articleInfoService.deleteById(id);
+        if (delete == 1) {
+            modelMap.put("success", true);
+            modelMap.put("message", "删除成功");
+            modelMap.put("code", 1);
+            modelMap.put("timestamp", new Date());
+        } else {
+            modelMap.put("success", false);
+            modelMap.put("message", "删除失败");
+            modelMap.put("code", 2);
+            modelMap.put("timestamp", new Date());
+        }
         return modelMap;
     }
 }

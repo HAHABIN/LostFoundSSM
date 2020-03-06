@@ -21,15 +21,15 @@
         <result column="last_edit_time" property="lastEditTime"/>
         <association property="personInfo" column="user_id"
                      javaType="entity.PersonInfo">
-            <id column="user_id" property="userId" />
-            <result column="nick_name" property="nickname" />
-            <result column="profile_img" property="profileImg" />
-            <result column="gender" property="gender" />
-            <result column="email" property="email" />
-            <result column="user_type" property="userType" />
-            <result column="create_time" property="createTime" />
-            <result column="last_edit_time" property="lastEditTime" />
-            <result column="help_times" property="helpTimes" />
+            <id column="user_id" property="userId"/>
+            <result column="nick_name" property="nickname"/>
+            <result column="profile_img" property="profileImg"/>
+            <result column="gender" property="gender"/>
+            <result column="email" property="email"/>
+            <result column="user_type" property="userType"/>
+            <result column="create_time" property="createTime"/>
+            <result column="last_edit_time" property="lastEditTime"/>
+            <result column="help_times" property="helpTimes"/>
         </association>
     </resultMap>
 
@@ -57,11 +57,22 @@
                 and a.address_content LIKE "%"#{addressContent}"%"
             </if>
             <if test="description!=null">
-                and a.description LIKE  "%"#{description}"%"
+                and a.description LIKE "%"#{description}"%"
             </if>
         </where>
         ORDER BY create_time DESC
         LIMIT #{start} ,#{pageSize}
+    </select>
+
+    <select id="queryArticleById" resultType="entity.ArticleInfo">
+
+        SELECT *
+        FROM lf_article_info
+        <where>
+            <if test="id != -1">
+                id = #{id}
+            </if>
+        </where>
     </select>
     <select id="searchArInfo" resultMap="ArticleInfoResultMap">
         SELECT a.*,p.nick_name,p.profile_img,p.gender,p.help_times
@@ -76,7 +87,7 @@
                 and a.address_content LIKE "%"#{addressContent}"%"
             </if>
             <if test="description!=null">
-                and a.description LIKE  "%"#{description}"%"
+                and a.description LIKE "%"#{description}"%"
             </if>
         </where>
         ORDER BY create_time DESC
@@ -91,6 +102,72 @@
         ,#{description},#{status},#{imgStr},#{recordStatus},#{createTime})
     </insert>
 
+    <!--更新用户信息-->
+    <update id="updateArticle" parameterType="entity.ArticleInfo">
+        UPDATE lf_article_info
+        <set>
+            <!-- 去掉最后一个, -->
+            <trim suffixOverrides=",">
+                <if test="typeId!=-1">
+                    type_id = #{typeId},
+                </if>
+                <if test="addressContent!=null">
+                    address_content = #{addressContent},
+                </if>
+                <if test="phone!=null">
+                    phone = #{phone},
+                </if>
+                <if test="description!=null">
+                    description = #{description},
+                </if>
+                <if test="findTime!=0">
+                    find_Time = #{findTime},
+                </if>
+                <if test="recordStatus!=-1">
+                    record_status = #{recordStatus},
+                </if>
+                <if test="imgStr!=null">
+                    imgStr = #{imgStr},
+                </if>
+                <if test="helperId!=-1">
+                    helper_id = #{helperId},
+                </if>
+                <if test="backTime!=0">
+                    back_time = #{backTime},
+                </if>
+                <if test="lastEditTime!=null">
+                    last_edit_time = #{lastEditTime}
+                </if>
+            </trim>
+
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <update id="updateArticleStatus" >
+         UPDATE lf_article_info
+        <!-- 去掉最后一个, -->
+        <trim suffixOverrides=",">
+         <set>
+             <if test="recordStatus!=-1">
+                 record_status = #{recordStatus},
+             </if>
+             <if test="backTime!=null">
+                 back_time = #{backTime},
+             </if>
+             <if test="lastEditTime!=null">
+                 last_edit_time = #{lastEditTime}
+             </if>
+         </set>
+        </trim>
+        WHERE id=#{id}
+    </update>
+    <delete id="deleteById">
+        DELETE FROM
+        lf_article_info
+        where
+        id = #{id}
+    </delete>
     <!--    <update id="update">-->
 
     <!--    </update>-->

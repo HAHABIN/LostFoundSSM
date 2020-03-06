@@ -1,5 +1,7 @@
 package entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -22,8 +24,10 @@ public class PersonInfo implements Serializable {
     //1.店家 2.顾客 3.超级管理员
     private Integer userType;
     //创建时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
     //上次更新时间，。
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastEditTime;
     //帮助次数
     private Integer helpTimes;
@@ -40,14 +44,13 @@ public class PersonInfo implements Serializable {
         this.helpTimes = helpTimes;
     }
 
-    public PersonInfo(Integer userId, String nickName, String profileImg, String email, String gender, Integer userType, Date createTime, Date lastEditTime, Integer helpTimes) {
+    public PersonInfo(Integer userId,String nickname,int userType, String profileImg, String email, String gender, Date lastEditTime, Integer helpTimes) {
         this.userId = userId;
-        this.nickname = nickName;
+        this.nickname = nickname;
+        this.userType = userType;
         this.profileImg = profileImg;
         this.email = email;
         this.gender = gender;
-        this.userType = userType;
-        this.createTime = createTime;
         this.lastEditTime = lastEditTime;
         this.helpTimes = helpTimes;
     }

@@ -20,14 +20,34 @@
             parameterType="Long">
         SELECT *
         FROM lf_person_info
-        where
-        user_id = #{userId}
+        <where>
+            <if test="userId != -1">
+                user_id = #{userId}
+            </if>
+        </where>
     </select>
+
+
+
     <select id="query" resultMap="PersonInfoResultMap"
             >
         SELECT *
         FROM lf_person_info
 
+    </select>
+
+    <select id="queryByIdOrName" resultMap="PersonInfoResultMap"
+            >
+        SELECT *
+        FROM lf_person_info
+        <where>
+            <if test="userId != -1">
+                user_id = #{userId}
+            </if>
+            <if test="nickname!=null">
+                nick_name LIKE "%"#{nickname}"%"
+            </if>
+        </where>
     </select>
 
     <!--新增用户-->
@@ -38,7 +58,7 @@
 		lf_person_info(user_id,nick_name,gender,email,profile_img,user_type,
 		create_time,last_edit_time,help_times)
 		VALUES
-		(#{userId},#{name},#{gender},#{email},#{profileImg},
+		(#{userId},#{nickname},#{gender},#{email},#{profileImg},
 		#{userType},#{createTime},#{lastEditTime},#{helpTimes})
 	</insert>
     <!--更新用户信息-->
@@ -69,5 +89,20 @@
         </set>
         WHERE user_id = #{userId}
     </update>
-
+    <delete id="deleteById">
+        DELETE FROM
+        lf_person_info
+        where
+        user_id = #{userId}
+    </delete>
+    <!--批量删除-->
+    <delete id="batchDeletePsrsonInfo" parameterType="long">
+        DELETE FROM
+        lf_person_info
+        WHERE user_id IN
+        <foreach collection="list" item="lineId" open="(" separator=","
+                 close=")">
+            #{userId}
+        </foreach>
+    </delete>
 </mapper>

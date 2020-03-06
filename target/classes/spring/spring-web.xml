@@ -50,10 +50,8 @@
     <mvc:interceptors>
         <!--登陆拦截器 -->
         <mvc:interceptor>
-            <mvc:mapping path="/superadmin/*"/>
-            <mvc:exclude-mapping path="/superadmin/login"/>
-            <mvc:exclude-mapping path="/superadmin/logincheck"/>
-            <mvc:exclude-mapping path="/superadmin/showpersoninfo"/>
+            <mvc:mapping path="/superadminPage/*"/>
+            <mvc:exclude-mapping path="/superadminPage/login"/>
             <bean class="interceptor.superadmin.SuperAdminInterceptor">
             </bean>
         </mvc:interceptor>

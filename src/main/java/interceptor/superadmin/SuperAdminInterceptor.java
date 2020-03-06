@@ -34,7 +34,7 @@ public class SuperAdminInterceptor extends HandlerInterceptorAdapter {
         PrintWriter out = response.getWriter();
         out.println("<html>");
         out.println("<script>");
-        out.println("window.open ('" + request.getContextPath() + "/superadmin/login','_self')");
+        out.println("window.open ('" + request.getContextPath() + "/superadminPage/login','_self')");
         out.println("</script>");
         out.println("</html>");
         return false;
