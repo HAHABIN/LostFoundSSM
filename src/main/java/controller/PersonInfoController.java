@@ -49,7 +49,20 @@ public class PersonInfoController {
         String gender = HttpServletRequestUtil.getString(request,"gender");
         int helpTimes = HttpServletRequestUtil.getInt(request,"helpTimes");
         PersonInfo personInfo = new PersonInfo(userId,nickname,profile_img,email,gender,new Date(),helpTimes);
-        int i = personInfoService.updatePersonInfo(personInfo);
+        PersonInfo delete = personInfoService.queryPersonInfoById(userId);
+        int i = 0;
+        try {
+            i = personInfoService.updatePersonInfo(personInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (profile_img!=null) {
+            List<String> imgStrList1 = StringUtils.fromJson(delete.getProfileImg(), new TypeToken<List<String>>() {
+            });
+            for (String str : imgStrList1) {
+                AliyunOSSClientUtil.deleteFile(str);
+            }
+        }
         if (i==1){
             modelMap.put("success", true);
             modelMap.put("message", "用户信息更新成功");

@@ -120,7 +120,7 @@
                 <if test="description!=null">
                     description = #{description},
                 </if>
-                <if test="findTime!=0">
+                <if test="findTime!=null">
                     find_Time = #{findTime},
                 </if>
                 <if test="recordStatus!=-1">
@@ -131,9 +131,6 @@
                 </if>
                 <if test="helperId!=-1">
                     helper_id = #{helperId},
-                </if>
-                <if test="backTime!=0">
-                    back_time = #{backTime},
                 </if>
                 <if test="lastEditTime!=null">
                     last_edit_time = #{lastEditTime}

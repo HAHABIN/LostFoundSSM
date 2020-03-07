@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import service.ArticleInfoService;
 import utils.AliyunOSSClientUtil;
 import utils.HttpServletRequestUtil;
+import utils.OSSClientConstants;
 import utils.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -77,6 +78,56 @@ public class ArticleInfoControler {
         return modelMap;
     }
 
+    /**
+     * 更新物品信息
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/updateArticle")
+    @ResponseBody
+    public Map<String,Object> updateArticle(HttpServletRequest request){
+        Map<String,Object> modelMap = new HashMap<>();
+        int id =  HttpServletRequestUtil.getInt(request, "id");
+        int userId = HttpServletRequestUtil.getInt(request, "userId");
+        int typeId = HttpServletRequestUtil.getInt(request, "typeId");
+        String phone = HttpServletRequestUtil.getString(request, "phone");
+        long findTimeStr = HttpServletRequestUtil.getLong(request, "findTime");
+        String imgStr = HttpServletRequestUtil.getString(request, "imgStr");
+        String addressContent = HttpServletRequestUtil.getString(request, "addressContent");
+        String description = HttpServletRequestUtil.getString(request, "description");
+        int recordStatus = HttpServletRequestUtil.getInt(request, "recordStatus");
+        ArticleInfo articleInfo = new ArticleInfo(id,userId,typeId,phone,new Date(findTimeStr),
+                imgStr,addressContent,description,recordStatus,new Date());
+        ArticleInfo delete = articleInfoService.queryArticleById(id);
+        int i = 0;
+        try {
+            i = articleInfoService.updateArticle(articleInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (imgStr!=null) {
+            List<String> imgStrList1 = StringUtils.fromJson(delete.getImgStr(), new TypeToken<List<String>>() {
+            });
+            for (String str : imgStrList1) {
+                AliyunOSSClientUtil.deleteFile(str);
+            }
+        }
+        if (i==1){
+            modelMap.put("success", true);
+            modelMap.put("message", "物品信息更新成功");
+            modelMap.put("code", 1);
+            modelMap.put("timestamp",new Date());
+        } else {
+            modelMap.put("success", false);
+            modelMap.put("message", "物品信息更新失败");
+            modelMap.put("code", 2);
+            modelMap.put("timestamp",new Date());
+        }
+
+        return modelMap;
+    }
 
     /**
      * 更新物品状态

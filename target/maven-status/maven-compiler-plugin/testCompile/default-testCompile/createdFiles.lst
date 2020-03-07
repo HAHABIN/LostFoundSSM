@@ -1,0 +1,6 @@
+dao\ArticleInfoTest.class
+dao\BaseTest.class
+dao\CityTest.class
+dao\PropertyTypeTest.class
+SaveImageFile.class
+dao\PersonInfoTest.class

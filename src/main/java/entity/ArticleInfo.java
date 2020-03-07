@@ -47,6 +47,21 @@ public class ArticleInfo implements Serializable {
 
     private PersonInfo personInfo;
 
+    public ArticleInfo(){};
+    public ArticleInfo(int id, int userId, int typeId, String phone, Date findTime, String imgStr,
+                       String addressContent, String description, int recordStatus, Date lastEditTime) {
+        this.id = id;
+        this.userId = userId;
+        this.typeId = typeId;
+        this.phone = phone;
+        this.findTime = findTime;
+        this.imgStr = imgStr;
+        this.addressContent = addressContent;
+        this.description = description;
+        this.recordStatus = recordStatus;
+        this.lastEditTime = lastEditTime;
+    }
+
     public PersonInfo getPersonInfo() {
         return personInfo;
     }
