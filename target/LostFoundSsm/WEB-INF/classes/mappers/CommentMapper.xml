@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--城市表数据库操作-->
+<mapper namespace="dao.CommentDao">
+
+    <insert id="insertComment" parameterType="entity.Comment"
+            useGeneratedKeys="true" keyProperty="cId" keyColumn="c_id">
+        INSERT
+		INTO
+		lf_comment(user_id,nick_name,user_img,content,create_time,article_id)
+		VALUES
+		(#{userId},#{nickName},#{userImg},#{content},#{createTime},#{articleId})
+    </insert>
+</mapper>

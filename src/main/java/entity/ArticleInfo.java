@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author HABIN
@@ -47,6 +48,8 @@ public class ArticleInfo implements Serializable {
 
     private PersonInfo personInfo;
 
+    private List<Comment> commentList;
+
     public ArticleInfo(){};
     public ArticleInfo(int id, int userId, int typeId, String phone, Date findTime, String imgStr,
                        String addressContent, String description, int recordStatus, Date lastEditTime) {
@@ -64,6 +67,18 @@ public class ArticleInfo implements Serializable {
 
     public PersonInfo getPersonInfo() {
         return personInfo;
+    }
+
+    public Date getBackTime() {
+        return backTime;
+    }
+
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<Comment> commentList) {
+        this.commentList = commentList;
     }
 
     public int getId() {

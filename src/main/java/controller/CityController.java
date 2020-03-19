@@ -37,7 +37,7 @@ public class CityController {
             modelMap.put("success", true);
             modelMap.put("message", "获取城市信息成功");
             modelMap.put("code", 1);
-            modelMap.put("data", cityList);
+            modelMap.put("result", cityList);
             modelMap.put("timestamp", new Date());
         } else {
             modelMap.put("success", false);
@@ -72,7 +72,7 @@ public class CityController {
                 modelMap.put("success", true);
                 modelMap.put("message", "获取省市级列表信息成功");
                 modelMap.put("code", 1);
-                modelMap.put("data", cityList);
+                modelMap.put("result", cityList);
                 modelMap.put("timestamp", new Date().getTime());
             } else {
                 modelMap.put("success", false);
