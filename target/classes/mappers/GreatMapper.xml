@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--城市表数据库操作-->
+<mapper namespace="dao.GreatDao">
+
+    <insert id="insert" parameterType="entity.Great"
+            useGeneratedKeys="true" keyProperty="gId" keyColumn="g_id">
+        INSERT
+		INTO
+		lf_great(g_id,ac_id,user_id)
+		VALUES
+		(#{gId},#{acId},#{userId})
+    </insert>
+    <delete id="deleteByUserId">
+
+        DELETE FROM
+        lf_great
+        where
+        user_id = #{userId}
+        and ac_id = #{acId}
+    </delete>
+</mapper>

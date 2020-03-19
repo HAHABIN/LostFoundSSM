@@ -42,12 +42,19 @@
             <result column="c_time" property="createTime"/>
             <result column="article_id" property="articleId"/>
         </collection>
-
+        <collection property="greatList" column="id"
+                    ofType="entity.Great">
+            <id column="g_id" property="gId"/>
+            <result column="ac_id" property="acId"/>
+<!--       此处为user_id 使用别名u_id 防止多表命名相同冲突     -->
+            <result column="us_id" property="userId"/>
+        </collection>
     </resultMap>
 
     <select id="queryArticleInfo" resultMap="ArticleInfoResultMap">
         SELECT a.*,p.nick_name,p.profile_img,p.gender,p.help_times,
-                c.c_id,c.user_id AS u_id,c.nick_name AS name,c.user_img,c.content,c.create_time AS c_time,c.article_id
+                c.c_id,c.user_id AS u_id,c.nick_name AS name,c.user_img,c.content,
+                c.create_time AS c_time,c.article_id, g.g_id,g.ac_id,g.user_id AS us_id
         FROM lf_article_info a
         LEFT JOIN
         lf_person_info p ON
@@ -55,6 +62,9 @@
         LEFT JOIN
         lf_comment c ON
         a.id = c.article_id
+        LEFT JOIN
+        lf_great g ON
+        a.id = g.ac_id
         <where>
             <if test="id!=-1">
                 a.id = #{id}
@@ -95,7 +105,8 @@
     </select>
     <select id="searchArInfo" resultMap="ArticleInfoResultMap">
         SELECT a.*,p.nick_name,p.profile_img,p.gender,p.help_times,
-        c.c_id,c.user_id AS u_id,c.nick_name AS name,c.user_img,c.content,c.create_time AS c_time,c.article_id
+        c.c_id,c.user_id AS u_id,c.nick_name AS name,c.user_img,
+        c.content,c.create_time AS c_time,c.article_id, g.g_id,g.ac_id,g.user_id AS us_id
         FROM lf_article_info a
         LEFT JOIN
         lf_person_info p ON

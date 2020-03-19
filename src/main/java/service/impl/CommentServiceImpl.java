@@ -9,6 +9,7 @@ import service.CommentService;
 /**
  * @author HABIN
  * @date 2020/3/19 1:05
+ * 评论业务层实现类
  */
 @Service
 public class CommentServiceImpl implements CommentService {

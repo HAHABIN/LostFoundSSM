@@ -49,6 +49,7 @@ public class ArticleInfo implements Serializable {
     private PersonInfo personInfo;
 
     private List<Comment> commentList;
+    private List<Great> greatList;
 
     public ArticleInfo(){};
     public ArticleInfo(int id, int userId, int typeId, String phone, Date findTime, String imgStr,
@@ -79,6 +80,14 @@ public class ArticleInfo implements Serializable {
 
     public void setCommentList(List<Comment> commentList) {
         this.commentList = commentList;
+    }
+
+    public List<Great> getGreatList() {
+        return greatList;
+    }
+
+    public void setGreatList(List<Great> greatList) {
+        this.greatList = greatList;
     }
 
     public int getId() {
