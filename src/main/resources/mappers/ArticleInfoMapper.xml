@@ -66,6 +66,7 @@
             </if>
             <if test="typeId!=-1">
                 and a.type_id = #{typeId}
+                and a.record_status &lt; 3
             </if>
 
             <if test="status!=-1">
@@ -81,6 +82,7 @@
                 and a.description LIKE "%"#{description}"%"
             </if>
         </where>
+
         ORDER BY create_time DESC
         LIMIT #{start} ,#{pageSize}
     </select>
@@ -102,13 +104,14 @@
         lf_person_info p ON
         a.user_id = p.user_id
         <where>
-            and a.status = a.record_status
+            and a.record_status &lt; 3
             <if test="addressContent!=null">
                 and a.address_content LIKE "%"#{addressContent}"%"
             </if>
             <if test="description!=null">
                 and a.description LIKE "%"#{description}"%"
             </if>
+
         </where>
         ORDER BY create_time DESC
         LIMIT #{start} ,#{pageSize}
