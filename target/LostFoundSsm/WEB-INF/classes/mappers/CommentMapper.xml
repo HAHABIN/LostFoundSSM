@@ -4,7 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--城市表数据库操作-->
 <mapper namespace="dao.CommentDao">
-
+	<resultMap id="CommentResultMap" type="entity.Comment">
+		<id column="c_id" property="cId" />
+		<result column="user_id" property="userId" />
+		<result column="nick_name" property="nickName" />
+		<result column="user_img" property="userImg" />
+		<result column="content" property="content" />
+		<result column="article_id" property="articleId" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
     <insert id="insertComment" parameterType="entity.Comment"
             useGeneratedKeys="true" keyProperty="cId" keyColumn="c_id">
         INSERT
@@ -13,4 +21,9 @@
 		VALUES
 		(#{userId},#{nickName},#{userImg},#{content},#{createTime},#{articleId})
     </insert>
+
+	<select id="queryCommentByAcId" resultMap="CommentResultMap">
+		select * from lf_comment
+		where article_id = #{cId}
+	</select>
 </mapper>

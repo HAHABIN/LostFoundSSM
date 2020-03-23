@@ -12,6 +12,7 @@ import utils.HttpServletRequestUtil;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,6 +56,32 @@ public class CommentController {
             modelMap.put("success", true);
             modelMap.put("message", "评论成功");
             modelMap.put("code", 1);
+            modelMap.put("timestamp",new Date());
+        } else {
+            modelMap.put("success", false);
+            modelMap.put("message", "评论失败");
+            modelMap.put("code", 0);
+            modelMap.put("timestamp",new Date());
+        }
+        return modelMap;
+    }
+    /**
+     * 查询
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/queryComment", method = RequestMethod.POST)
+    @ResponseBody
+    private Map<String,Object> queryCommentByAcId(HttpServletRequest request) {
+        Map<String,Object> modelMap = new HashMap<>();
+        int articleId = HttpServletRequestUtil.getInt(request, "articleId");
+        List<Comment> comments = commentService.queryCommentByAcId(articleId);
+        if (comments!=null&&!comments.isEmpty()){
+            modelMap.put("success", true);
+            modelMap.put("message", "获取评论成功");
+            modelMap.put("code", 1);
+            modelMap.put("result",comments);
             modelMap.put("timestamp",new Date());
         } else {
             modelMap.put("success", false);

@@ -13,6 +13,7 @@ import utils.HttpServletRequestUtil;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -78,6 +79,33 @@ public class GreatController {
         } else {
             modelMap.put("success", false);
             modelMap.put("message", "取消点赞失败");
+            modelMap.put("code", 0);
+            modelMap.put("timestamp",new Date());
+        }
+        return modelMap;
+    }
+
+    /**
+     * 查询评论
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/queryGreat", method = RequestMethod.POST)
+    @ResponseBody
+    private Map<String,Object> queryCommentByAcId(HttpServletRequest request) {
+        Map<String,Object> modelMap = new HashMap<>();
+        int articleId = HttpServletRequestUtil.getInt(request, "articleId");
+        List<Great> greatList = greatService.queryGreatByAcId(articleId);
+        if (greatList!=null&&!greatList.isEmpty()){
+            modelMap.put("success", true);
+            modelMap.put("message", "获取评论成功");
+            modelMap.put("code", 1);
+            modelMap.put("result",greatList);
+            modelMap.put("timestamp",new Date());
+        } else {
+            modelMap.put("success", false);
+            modelMap.put("message", "评论失败");
             modelMap.put("code", 0);
             modelMap.put("timestamp",new Date());
         }

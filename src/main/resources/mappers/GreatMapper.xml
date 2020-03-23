@@ -4,7 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--城市表数据库操作-->
 <mapper namespace="dao.GreatDao">
-
+    <resultMap id="GreatResultMap" type="entity.Great">
+        <id column="g_id" property="gId" />
+        <result column="ac_id" property="acId" />
+        <result column="user_id" property="userId" />
+    </resultMap>
     <insert id="insert" parameterType="entity.Great"
             useGeneratedKeys="true" keyProperty="gId" keyColumn="g_id">
         INSERT
@@ -21,4 +25,8 @@
         user_id = #{userId}
         and ac_id = #{acId}
     </delete>
+    <select id="queryGreatByAcId" resultMap="GreatResultMap">
+        select * from lf_great
+        where ac_id = #{acId}
+    </select>
 </mapper>

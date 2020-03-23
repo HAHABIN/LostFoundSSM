@@ -2,12 +2,16 @@ package controller;
 
 import com.google.gson.reflect.TypeToken;
 import entity.ArticleInfo;
+import entity.Comment;
+import entity.Great;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.ArticleInfoService;
+import service.CommentService;
+import service.GreatService;
 import utils.AliyunOSSClientUtil;
 import utils.HttpServletRequestUtil;
 import utils.OSSClientConstants;
@@ -32,6 +36,11 @@ public class ArticleInfoControler {
     @Autowired
     private ArticleInfoService articleInfoService;
 
+    @Autowired
+    private CommentService commentService;
+
+    @Autowired
+    private GreatService greatService;
 
     @RequestMapping(value = "/InsertArInfo", method = RequestMethod.POST)
     @ResponseBody
@@ -181,7 +190,7 @@ public class ArticleInfoControler {
         int pageNo = HttpServletRequestUtil.getInt(request, "pageNo");
         int pageSize = HttpServletRequestUtil.getInt(request, "pageSize");
         //分页  最少两行
-        if (pageSize <= 2 || pageSize > 20) pageSize = 10;
+        if (pageSize <= 2) pageSize = 10;
         if (pageNo <= 0) {
             pageNo = 0;
         } else {
@@ -190,7 +199,13 @@ public class ArticleInfoControler {
         int start = pageNo * pageSize;
         List<ArticleInfo> articleInfoList = articleInfoService.queryArticleInfo(id, userId, typeId, addressContent
                 , description, status, recordStatus, start, pageSize);
-
+        for(int i = 0;i<articleInfoList.size();i++){
+            int articleId = articleInfoList.get(i).getId();
+            List<Comment> commentList = commentService.queryCommentByAcId(articleId);
+            List<Great> greatList = greatService.queryGreatByAcId(articleId);
+            if (commentList!=null) articleInfoList.get(i).setCommentList(commentList);
+            if (greatList!=null) articleInfoList.get(i).setGreatList(greatList);
+        }
         if (articleInfoList.size() == 0) {
             modelMap.put("success", true);
             modelMap.put("message", "未查询到");
@@ -230,7 +245,7 @@ public class ArticleInfoControler {
         int pageNo = HttpServletRequestUtil.getInt(request, "pageNo");
         int pageSize = HttpServletRequestUtil.getInt(request, "pageSize");
         //分页  最少两行
-        if (pageSize <= 2 || pageSize > 20) pageSize = 10;
+        if (pageSize <= 2 ) pageSize = 10;
         if (pageNo <= 0) {
             pageNo = 0;
         } else {
@@ -239,6 +254,13 @@ public class ArticleInfoControler {
         int start = pageNo * pageSize;
         List<ArticleInfo> articleInfoList = articleInfoService.searchArInfo(addressContent, description, start, pageSize);
 
+        for(int i = 0;i<articleInfoList.size();i++){
+            int articleId = articleInfoList.get(i).getId();
+            List<Comment> commentList = commentService.queryCommentByAcId(articleId);
+            List<Great> greatList = greatService.queryGreatByAcId(articleId);
+            if (commentList!=null) articleInfoList.get(i).setCommentList(commentList);
+            if (greatList!=null) articleInfoList.get(i).setGreatList(greatList);
+        }
         if (articleInfoList.size() == 0) {
             //模糊查询  内容查询不到的话就查询地址
             if (description != null) {

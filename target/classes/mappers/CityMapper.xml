@@ -13,7 +13,6 @@
     <!-- 三级联动查询-->
         <collection column="id" property="countyList"
                     select="dao.CountyDao.queryCounty">
-
         </collection>
     </resultMap>
     <select id="query" resultMap="CityResultMap">
